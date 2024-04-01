@@ -6,6 +6,10 @@
     margin-right: -200px; /* 로고와 "SpartaIM" 사이의 간격을 20px로 설정 */
 }
 
+.navbar-nav{
+    color: black;
+    align-items: center;
+}
 
 .navbar {
     display: flex; /* Flexbox 레이아웃 적용 */
@@ -74,3 +78,4 @@ tr {
     padding-left: 50px; /* 행의 왼쪽 여백을 400px로 설정 */
     padding-right: 50px; /* 행의 오른쪽 여백을 400px로 설정 */
 }
+
