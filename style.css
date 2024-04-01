@@ -1,0 +1,76 @@
+.ms-3 {
+    justify-content: center; /* 요소를 가로 방향으로 가운데 정렬 */
+}
+
+.ms-3 img {
+    margin-right: -200px; /* 로고와 "SpartaIM" 사이의 간격을 20px로 설정 */
+}
+
+
+.navbar {
+    display: flex; /* Flexbox 레이아웃 적용 */
+    align-items: center; /* 기준선에 맞추어 정렬 */
+    justify-content: space-between; /* 요소들을 최대한 분산 정렬 */
+    padding-left: 200px; /* 왼쪽 여백 추가 */
+    font-weight: bold;
+    font-size: 25px;
+    color: black;
+    margin-bottom: 50px
+
+    
+}
+
+
+.menu {
+    display: inline-block; /* 인라인 블록 요소로 설정 */
+    align-self: center; /* 기준선에 맞추어 정렬 */
+}
+
+.menu + .menu {
+    margin-left: 100px; /* 첫 번째 메뉴와 두 번째 메뉴 사이의 간격을 100px로 설정 */
+}
+
+.menu:last-child {
+    margin-right: 200px; /* 마지막 메뉴의 오른쪽 마진을 200px로 설정 */
+}
+
+
+
+.search-container {
+
+    display: flex;
+    align-items: center;
+    margin: 0 50px;
+    font-size: 10px;
+    margin-bottom: 20px;
+
+}
+
+.search-container span {
+    margin-right: 20px; /* 검색 한글과 입력란 사이에 10px 마진 추가 */
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.wrap.title hr {
+    display: none; /* hr 요소 숨기기 */
+}
+
+
+.wrap.title h1 a {
+    color: red; /* 빨간색으로 설정 */
+    font-size: 25px;
+    margin: 0 50px;
+    font-weight: bold;
+}
+
+
+.table {
+    margin-left: 50px; /* 왼쪽 여백 400px */
+    margin-right: 50px; /* 오른쪽 여백 400px */
+}
+
+tr {
+    padding-left: 50px; /* 행의 왼쪽 여백을 400px로 설정 */
+    padding-right: 50px; /* 행의 오른쪽 여백을 400px로 설정 */
+}
