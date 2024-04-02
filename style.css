@@ -1,0 +1,115 @@
+.ms-3 {
+    justify-content: center; /* 요소를 가로 방향으로 가운데 정렬 */
+}
+
+.ms-3 img {
+    margin-right: -200px; /* 로고와 "SpartaIM" 사이의 간격을 20px로 설정 */
+    height: 40px; /* Adjust the height as needed */
+    width: auto; /* Maintain aspect ratio */
+}
+
+/* Change the color of "스파르타임" to black */
+.navbar .nav-link {
+    color: black;
+    
+}
+
+/* Horizontally align "스파르타임" with the logo image */
+.navbar .navbar-expand-lg {
+    display: flex;
+    align-items: center;
+}
+
+/* 마우스 호버시 링크 색상 변경 */
+.menu a:hover {
+    color: red;
+}
+
+
+
+.navbar-nav{
+    color: black;
+    align-items: center;
+}
+
+
+.navbar {
+    display: flex; /* Flexbox 레이아웃 적용 */
+    align-items: center; /* 기준선에 맞추어 정렬 */
+    justify-content: space-between; /* 요소들을 최대한 분산 정렬 */
+    padding-left: 200px; /* 왼쪽 여백 추가 */
+    font-weight: bold;
+    font-size: 25px;
+    color: black;
+    margin-bottom: 50px
+
+    
+}
+
+
+.menu {
+    display: inline-block; /* 인라인 블록 요소로 설정 */
+    align-self: center; /* 기준선에 맞추어 정렬 */
+}
+
+.menu + .menu {
+    margin-left: 100px; /* 첫 번째 메뉴와 두 번째 메뉴 사이의 간격을 100px로 설정 */
+}
+
+.menu:last-child {
+    margin-right: 200px; /* 마지막 메뉴의 오른쪽 마진을 200px로 설정 */
+}
+
+
+
+.search-container {
+
+    display: flex;
+    align-items: center;
+    margin: 0 50px;
+    font-size: 20px;
+    margin-bottom: 20px;
+
+}
+
+.search-container span {
+    margin-right: 20px; /* 검색 한글과 입력란 사이에 10px 마진 추가 */
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.wrap.title hr {
+    display: none; /* hr 요소 숨기기 */
+}
+
+
+.wrap.title h1 a {
+    color: red; /* 빨간색으로 설정 */
+    font-size: 25px;
+    margin: 0 50px;
+    font-weight: bold;
+}
+
+
+.table {
+
+    margin-left: 50px; 
+    margin-right: 50px; 
+    max-width: 100%; /* 테이블의 최대 너비를 화면의 가로 크기로 설정 */
+    overflow-x: auto; /* 가로 스크롤을 추가하여 테이블이 화면을 벗어나면 스크롤 가능하도록 설정 */
+}
+
+tr {
+    padding-left: 50px; /* 행의 왼쪽 여백을 400px로 설정 */
+    padding-right: 50px; /* 행의 오른쪽 여백을 400px로 설정 */
+}
+
+
+.link {
+    color: black; /* 기본 링크 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.link:hover {
+    color: red; /* 호버 시 색상 변경 */
+}
