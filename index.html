@@ -1,0 +1,131 @@
+<!Doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+
+<body> 
+    
+    <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
+        <div class="ms-3 d-flex align-items-center">
+            <img src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/images/sparta-logo.svg"
+                alt="">
+            <nav class="navbar navbar-expand-lg ">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">스파르타임</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="ms-auto">
+            <div class="menu">
+                <a class="nav-link"
+                    href="index.html">게시판</a>
+            </div>
+            <div class="menu">
+                <a class="nav-link"
+                    href="writing.html">글쓰기</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="search-container">
+        <span>검색</span>
+        <input type="text" name="keyword" placeholder="글을 검색하세요" class="search">
+    </div>
+    <div class="wrap title">
+        <h1><a href="#">게시판</a></h1>
+        <hr>
+    </div>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">번호</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+
+                <td><a href="/post/1"class="link">개발자 이력서 도와주실 분..</a></td>
+                <td>김민준</td>
+                <td>2024. 3. 31</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+
+                <td><a href="/post/2"class="link">점메추</a></td>
+                <td>박지후</td>
+                <td>2024. 3. 29</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+
+                <td><a href="/post/3"class="link">"스파르타코딩클럽 부트캠프 후기"</a></td>
+                <td>오연우</td>
+                <td>2024. 3. 28</td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+
+                <td><a href="/post/4"class="link">올해 공휴일 정보!</a></td>
+                <td>김선우</td>
+                <td>2024. 3. 28</td>
+            </tr>
+            <tr>
+                <th scope="row">5</th>
+  <td><a href="/post/5"class="link">파이썬으로 보는 오늘의 운세ㅋㅋ</a></td>
+
+                <td>황지효</td>
+                <td>2024. 3. 25</td>
+            </tr>
+            <tr>
+                <th scope="row">6</th>
+
+                <td><a href="/post/6"class="link">cs 강의 질문이용</a></td>
+                <td>이주원</td>
+                <td>2024. 3. 24</td>
+            </tr>
+            <tr>
+                <th scope="row">7</th>
+
+                <td><a href="/post/7"class="link">부트캠프 들을만 한가요??</a></td>
+
+                <td>김한결</td>
+                <td>2024. 3. 21</td>
+            </tr>
+            <tr>
+                <th scope="row">8</th>
+ <td><a href="/post/8"class="link">안녕하세요~</a></td>
+
+                <td>이승현</td>
+                <td>2024. 3. 20</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+
+</html>
