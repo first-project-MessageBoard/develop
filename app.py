@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 import os
 
 app = Flask(__name__)
@@ -83,9 +84,6 @@ class Comment(db.Model):
     comment_writer = db.Column(db.String, nullable=False)
     comment_write_date = db.Column(db.String, nullable=False)
 
-
-with app.app_context():
-    db.create_all()
 
 # 현재시간
 def write_date():
