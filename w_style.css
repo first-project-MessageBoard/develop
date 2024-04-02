@@ -62,54 +62,40 @@
 
 
 
-.search-container {
-
-    display: flex;
-    align-items: center;
-    margin: 0 50px;
-    font-size: 20px;
-    margin-bottom: 20px;
-
+table {
+    margin: auto;
+}
+input[type="text"] {
+    border: 1.5px  rgb(240, 39, 39) solid;
+    width: 500px;
+    height: 30px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+textarea {
+    border: 1.5px  rgb(240, 39, 39) solid;
+    width: 500px;
+    height: 400px;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-top: 10px;
+    resize: none;
+}
+.header {
+    height: 30px;
 }
 
-.search-container span {
-    margin-right: 20px; /* 검색 한글과 입력란 사이에 10px 마진 추가 */
-    font-size: 25px;
-    font-weight: bold;
+.btn-primary {
+    background-color: rgb(240, 39, 39);
+    color: white;
+    
+    border: 0px
 }
 
-.wrap.title hr {
-    display: none; /* hr 요소 숨기기 */
-}
-
-
-.wrap.title h1 a {
-    color: red; /* 빨간색으로 설정 */
-    font-size: 25px;
-    margin: 0 50px;
-    font-weight: bold;
-}
-
-
-.table {
-
-    margin-left: 50px; 
-    margin-right: 50px; 
-    max-width: 100%; /* 테이블의 최대 너비를 화면의 가로 크기로 설정 */
-    overflow-x: auto; /* 가로 스크롤을 추가하여 테이블이 화면을 벗어나면 스크롤 가능하도록 설정 */
-}
-
-tr {
-    padding-left: 50px; /* 행의 왼쪽 여백을 400px로 설정 */
-    padding-right: 50px; /* 행의 오른쪽 여백을 400px로 설정 */
-}
-
-
-.link {
-    color: black; /* 기본 링크 색상 */
-    text-decoration: none; /* 밑줄 제거 */
-}
-
-.link:hover {
-    color: red; /* 호버 시 색상 변경 */
+/* 작성 취소 버튼 */
+.btn-secondary {
+    background-color: black;
+    color: white;
+    
+    border: 0px
 }
