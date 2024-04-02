@@ -98,8 +98,19 @@ textarea {
 
 /* 작성 취소 버튼 */
 .btn-secondary {
-    background-color: black;
+    background-color: rgb(85, 85, 85);
     color: white;
     
+    border: 0px
+}
+
+.btn-tertiary{
+    background-color: rgb(85, 85, 85);
+    color: white;
+    border: 0px
+}
+.btn-quaternary{
+    background-color: rgb(85, 85, 85);
+    color: white;
     border: 0px
 }
