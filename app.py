@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
 import os
 
 app = Flask(__name__)
@@ -18,13 +17,25 @@ db = SQLAlchemy(app)
 
 
 class Post(db.Model):
-    post_id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post_title = db.Column(db.String(100), nullable=False)
     post_content = db.Column(db.Text, nullable=False)
     post_created_at = db.Column(
         db.DateTime, nullable=False, default=db.func.now())
     post_author = db.Column(db.String(50), nullable=False,
                             default='Anonymous')  # 작성자 열 추가
+
+    def __repr__(self):
+        return f'{self.post_id} {self.post_title} {self.post_content}'
+
+
+class Comment(db.Model):
+    comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
+    comment_content = db.Column(db.Text, nullable=False)
+    comment_writer = db.Column(db.String(50), nullable=False)
+    comment_created_at = db.Column(
+        db.DateTime, nullable=False, default=db.func.now())
 
 
 # 테이블 생성
@@ -37,7 +48,7 @@ with app.app_context():
 @app.route('/')
 def index():
     posts = Post.query.order_by(Post.post_created_at.desc()).all()
-    return render_template('index.html', posts=posts)
+    return render_template('index.html', data=posts)
 
 # 글 작성
 
@@ -53,9 +64,68 @@ def add_post():
     db.session.commit()
     return redirect(url_for('index'))
 
+# 글 작성 페이지로 이동
+
+
+@app.route('/write')
+def write_post():
+    return render_template('writing.html')
+
+# 게시글
+
+
+@app.route('/post/<id>/', methods=['GET', 'POST'])
+def post(id):
+    # 댓글 조회
+    def comments_list(p_id):
+        comments = Comment.query.filter_by(post_id=p_id).order_by(
+            Comment.comment_created_at.desc()).all()
+        return comments
+
+    # 댓글 추가
+    def comment_add(p_id, content, writer):
+        new_comment = Comment(
+            post_id=p_id, comment_content=content, comment_writer=writer)
+        db.session.add(new_comment)
+        db.session.commit()
+
+    # 댓글 수정
+    def comment_update(p_id, c_id, content):
+        comment_data = Comment.query.filter_by(
+            post_id=p_id, comment_id=c_id).first()
+        comment_data.comment_content = content
+        db.session.add(comment_data)
+        db.session.commit()
+
+    if request.method == "POST":
+        comment_content = request.form.get('comment')
+        comment_writer = "익명"  # 임시 작성자
+        comment_add(id, comment_content, comment_writer)
+
+    post = Post.query.filter_by(post_id=id).first()
+    comments = comments_list(id)
+
+    context = {
+        "post": post,
+        "comments": comments
+    }
+
+    return render_template('post.html', data=context)
+
+# 댓글 삭제
+
+
+@app.route('/post/<p_id>/<c_id>/delete', methods=['GET'])
+def comment_delete(p_id, c_id):
+    comment_data = Comment.query.filter_by(
+        post_id=p_id, comment_id=c_id).first()
+    db.session.delete(comment_data)
+    db.session.commit()
+    print('here')
+    return redirect(url_for('post', id=p_id))
+
+
 # 글 수정
-
-
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_post(id):
     post = Post.query.get_or_404(id)
@@ -76,45 +146,6 @@ def delete_post(id):
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for('index'))
-
-class Comment(db.Model):
-    comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True) 
-    # post_id = db.Column(db.Integer, ForeignKey('<여기에 post_id>'))
-    comment_content = db.Column(db.String, nullable=False)
-    comment_writer = db.Column(db.String, nullable=False)
-    comment_write_date = db.Column(db.String, nullable=False)
-
-
-# 현재시간
-def write_date():
-    now = datetime.now()
-    return now.strftime('%Y-%m-%d %H:%M:%S')
-
-
-# 댓글 추가
-def comment_add(p_id, content, writer):
-    new_comment = Comment(post_id = p_id, comment_content=content, comment_writer=writer, comment_write_date=write_date)
-    db.session.add(new_comment)
-    db.session.commit()
-
-
-# 댓글 수정
-def comment_update(p_id, c_id, content):
-    comment_data = Comment.query.filter_by(
-        post_id=p_id, comment_id=c_id).first()
-    comment_data.comment_content = content
-    comment_data.comment_write_date = write_date
-    db.session.add(comment_data)
-    db.session.commit()
-
-
-# 댓글 삭제
-def comment_delete(p_id, c_id):
-    comment_data = Comment.query.filter_by(
-        post_id=p_id, comment_id=c_id).first()
-    db.session.delete(comment_data)
-    db.session.commit()
-
 
 
 if __name__ == '__main__':
