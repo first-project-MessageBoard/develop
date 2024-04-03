@@ -43,13 +43,16 @@
         </div>
     </nav>
 
+    <!-- 게시글 관련 -->
     <div class="post">
-        <h2 class="post-title">{{ data.post.post_title }} <div class="links"><a href="#" class="edit-link">수정</a> <a
-                    href="#" class="delete-link">삭제</a></div>
-        </h2>
-        <p class="post-content">
-            {{ data.post.post_content }}
-        </p>
+        <h2 class="post-title">{{ data.post.post_title }}</h2>
+        <div class="links">
+            <a href="#" class="edit-link">수정</a>
+            <form action="{{ url_for('delete_post', id=data.post.post_id) }}" method="post">
+                <button type="submit">삭제</button>
+            </form>
+        </div>
+        <p class="post-content">{{ data.post.post_content }}</p>
     </div>
 
     <div class="comment-container">
