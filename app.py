@@ -117,13 +117,12 @@ def post(id):
 # 댓글 삭제
 
 
-@app.route('/post/<p_id>/<c_id>/delete', methods=['GET'])
+@app.route('/post/<p_id>/delete/<c_id>', methods=['POST'])
 def comment_delete(p_id, c_id):
     comment_data = Comment.query.filter_by(
         post_id=p_id, comment_id=c_id).first()
     db.session.delete(comment_data)
     db.session.commit()
-    print('here')
     return redirect(url_for('post', id=p_id))
 
 
@@ -131,15 +130,16 @@ def comment_delete(p_id, c_id):
 @app.route('/edit/<int:id>', methods=['GET'])
 def edit_post(id):
     post = Post.query.get_or_404(id)
-    return render_template('edit.html',post=post, is_edit=True)
+    return render_template('edit.html', post=post, is_edit=True)
 
 # 글 수정
+
+
 @app.route('/edit/<int:id>', methods=['POST'])
 def edit_post_submit(id):
     post = Post.query.get_or_404(id)
     post.post_title = request.form['title']
     post.post_content = request.form['content']
-    post.post_author = request.form['author']
     db.session.commit()
     return redirect(url_for('index'))
 
