@@ -26,12 +26,11 @@ class Post(db.Model):
 
 class Comment(db.Model):
     comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    post_id = db.Column(db.Integer, nullable=False)
-    comment_content = db.Column(db.String, nullable=False)
-    comment_writer = db.Column(db.String, nullable=False)
-    comment_write_date = db.Column(db.DateTime, nullable=False,
-                                default=db.func.now())
-
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
+    comment_content = db.Column(db.Text, nullable=False)
+    comment_writer = db.Column(db.String(50), nullable=False)
+    comment_created_at = db.Column(
+        db.DateTime, nullable=False, default=db.func.now())
 
 
 # 테이블 생성
@@ -47,6 +46,8 @@ def index():
     return render_template('index.html', data=posts)
 
 # 글 작성
+
+
 @app.route('/post', methods=['POST'])
 def create_post():
     title = request.form['title']
@@ -60,14 +61,14 @@ def create_post():
 # 글 작성 페이지로 이동
 
 
-@app.route('/write')
+@app.route('/writing.html')
 def write_post():
     return render_template('writing.html')
 
 # 게시글
 
 
-@app.route('/post/<id>/', methods=['GET', 'POST'])
+@app.route('/post/<int:id>/', methods=['GET', 'POST'])
 def post(id):
     # 댓글 조회
     def comments_list(p_id):
@@ -138,8 +139,6 @@ def delete_post(id):
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for('index'))
-
-
 
 
 if __name__ == '__main__':

@@ -38,24 +38,24 @@
                 <a class="nav-link" href="/">게시판</a>
             </div>
             <div class="menu">
-                <a class="nav-link" href="/write">글쓰기</a>
+                <a class="nav-link" href="/writing.html">글쓰기</a>
             </div>
         </div>
     </nav>
 
     <div class="post">
-        <h2 class="post-title">{{ post.post_title }} <div class="links"><a href="#" class="edit-link">수정</a> <a href="#"
-                    class="delete-link">삭제</a></div>
+        <h2 class="post-title">{{ data.post.post_title }} <div class="links"><a href="#" class="edit-link">수정</a> <a
+                    href="#" class="delete-link">삭제</a></div>
         </h2>
         <p class="post-content">
-            {{ post.post_content }}
+            {{ data.post.post_content }}
         </p>
     </div>
 
     <div class="comment-container">
         <!-- 댓글 폼 -->
         <div class="comment-form">
-            <form id="comment" action="/comment/{{ post.post_id }}" method="POST">
+            <form id="comment" action="/post/{{ data.post.post_id }}" method="POST">
                 <textarea name="comment" id="comment" rows="3" placeholder="댓글을 입력하세요"></textarea>
                 <button type="submit">댓글 작성</button>
             </form>
@@ -63,20 +63,18 @@
 
         <ul class="comment-list">
             <!-- 댓글 아이템 -->
-            {% for comment in comments %}
+            {% for comment in data.comments %}
             <li class="comment-item">
                 <div class="comment-header">
                     <span class="comment-author">{{ comment.comment_writer|e }}</span>
-                    <span class="comment-date">{{ comment.comment_write_date|e }}</span>
+                    <span class="comment-date">{{ comment.comment_created_at|e }}</span>
                 </div>
                 <div class="comment-content">
                     {{ comment.comment_content|e }}
                 </div>
                 <div class="comment-actions">
                     <a href="#" class="edit-link">수정</a>
-                    <form action="/comment/{{ post.post_id }}/{{ comment.comment_id }}/delete" method="POST">
-                        <button type="submit" class="delete-link">삭제</button>
-                    </form>
+                    <a href="/post/{{data.post.post_id}}/{{comment.comment_id}}/delete" class="delete-link">삭제</a>
                 </div>
             </li>
             {% endfor %}

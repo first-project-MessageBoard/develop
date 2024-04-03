@@ -62,7 +62,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for post in posts %}
+            {% for post in data %}
             <tr>
                 <th scope="row">{{ post.post_id }}</th>
                 <td><a href="/post/{{ post.post_id }}" class="link">{{ post.post_title }}</a></td>
