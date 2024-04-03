@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
 import os
 
 app = Flask(__name__)
@@ -16,7 +15,7 @@ db = SQLAlchemy(app)
 
 # 모델 정의
 class Post(db.Model):
-    post_id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post_title = db.Column(db.String(100), nullable=False)
     post_content = db.Column(db.Text, nullable=False)
     post_created_at = db.Column(
@@ -34,6 +33,7 @@ class Comment(db.Model):
                                 default=db.func.now())
 
 
+
 # 테이블 생성
 with app.app_context():
     db.create_all()
@@ -44,9 +44,7 @@ with app.app_context():
 def index():
     image_url = "https://postfiles.pstatic.net/MjAyNDA0MDJfMjA0/MDAxNzEyMDUzNTg2MzA4.bBTRt6qjNaELTNrH9sOoF14WWyarzjSCQ1fmgWObFVgg.cLeRNAaZEJjN9Dqhx-oN0DJeIlNIQ6cfwhngGlGLQMYg.PNG/%EC%8A%A4%ED%8C%8C%EB%A5%B4%ED%83%80%EC%9E%84_%EB%A1%9C%EA%B3%A0.png?type=w966"
     posts = Post.query.order_by(Post.post_created_at.desc()).all()
-    print(posts)
-    return render_template('index.html', image_url=image_url, posts=posts)
-
+    return render_template('index.html', data=posts)
 
 # 글 작성
 @app.route('/post', methods=['POST'])
@@ -59,20 +57,69 @@ def create_post():
     db.session.commit()
     return redirect(url_for('index'))
 
-
-@app.route('/post/<int:id>')
-def view_post(id):
-    post = Post.query.get_or_404(id)
-    return render_template('post.html', post=post)
+# 글 작성 페이지로 이동
 
 
-@app.route('/writing.html')
-def writing():
+@app.route('/write')
+def write_post():
     return render_template('writing.html')
+
+# 게시글
+
+
+@app.route('/post/<id>/', methods=['GET', 'POST'])
+def post(id):
+    # 댓글 조회
+    def comments_list(p_id):
+        comments = Comment.query.filter_by(post_id=p_id).order_by(
+            Comment.comment_created_at.desc()).all()
+        return comments
+
+    # 댓글 추가
+    def comment_add(p_id, content, writer):
+        new_comment = Comment(
+            post_id=p_id, comment_content=content, comment_writer=writer)
+        db.session.add(new_comment)
+        db.session.commit()
+
+    # 댓글 수정
+    def comment_update(p_id, c_id, content):
+        comment_data = Comment.query.filter_by(
+            post_id=p_id, comment_id=c_id).first()
+        comment_data.comment_content = content
+        db.session.add(comment_data)
+        db.session.commit()
+
+    if request.method == "POST":
+        comment_content = request.form.get('comment')
+        comment_writer = "익명"  # 임시 작성자
+        comment_add(id, comment_content, comment_writer)
+
+    post = Post.query.filter_by(post_id=id).first()
+    comments = comments_list(id)
+
+    context = {
+        "post": post,
+        "comments": comments
+    }
+
+    return render_template('post.html', data=context)
+
+# 댓글 삭제
+
+
+@app.route('/post/<p_id>/<c_id>/delete', methods=['GET'])
+def comment_delete(p_id, c_id):
+    comment_data = Comment.query.filter_by(
+        post_id=p_id, comment_id=c_id).first()
+    db.session.delete(comment_data)
+    db.session.commit()
+    print('here')
+    return redirect(url_for('post', id=p_id))
 
 
 # 글 수정
-@app.route('/edit/<int:id>', methods=['POST'])
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_post(id):
     post = Post.query.get_or_404(id)
     if request.method == 'POST':
@@ -93,44 +140,6 @@ def delete_post(id):
     return redirect(url_for('index'))
 
 
-# 댓글 추가
-@app.route('/comment/<int:id>', methods=['POST'])
-def add_comment(id):
-    content = request.form['comment']
-    writer = request.form.get('writer', 'Anonymous')
-    new_comment = Comment(post_id=id, comment_content=content,
-                          comment_writer=writer, comment_write_date=datetime.now())
-    db.session.add(new_comment)
-    db.session.commit()
-    return redirect(url_for('view_post', id=id))
-
-
-# 댓글 수정
-@app.route('/comment/<int:id>/edit', methods=['POST'])
-def edit_comment(id):
-    comment = Comment.query.get_or_404(id)
-    if request.method == 'POST':
-        comment.comment_content = request.form['comment']
-        comment.comment_write_date = datetime.now()
-        db.session.commit()
-        return redirect(url_for('view_post', id=comment.post_id))
-    return render_template('edit_comment.html', comment=comment)
-
-
-# 댓글 삭제
-@app.route('/comment/<int:id>/delete', methods=['POST'])
-def delete_comment(id):
-    comment = Comment.query.get_or_404(id)
-    post_id = comment.post_id
-    db.session.delete(comment)
-    db.session.commit()
-    return redirect(url_for('view_post', id=post_id))
-
-
-# 정적 파일(css) 제공
-@app.route('/<path:filename>')
-def static_files(filename):
-    return send_from_directory(os.path.join(app.root_path, 'static'), filename)
 
 
 if __name__ == '__main__':
