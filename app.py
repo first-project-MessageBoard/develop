@@ -31,7 +31,7 @@ class Comment(db.Model):
     comment_content = db.Column(db.String, nullable=False)
     comment_writer = db.Column(db.String, nullable=False)
     comment_write_date = db.Column(db.DateTime, nullable=False,
-                                   default=db.func.now())
+                                default=db.func.now())
 
 
 # 테이블 생성
