@@ -12,6 +12,10 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
 </head>
 
+<link rel="stylesheet" type="text/css" href="static/W_style.css">
+<link rel="stylesheet" type="text/css" href="static/style.css">
+<link rel="stylesheet" type="text/css" href="static/style2.css">
+
 <body>
     <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
         <div class="ms-3 d-flex align-items-center">
@@ -72,63 +76,41 @@
                     <span class="comment-author">{{ comment.comment_writer|e }}</span>
                     <span class="comment-date">{{ comment.comment_created_at|e }}</span>
                 </div>
-                <div id="commentText" class="comment-content"> <!-- 수정 / 가능한 댓글 텍스트 엘리먼트 -->
+                <div class="comment-content" id="comment-content">
                     {{ comment.comment_content|e }}
                 </div>
-                <div class="comment-actions">
-                    <button onclick="editComment()">수정</button> <!-- 수정 버튼 -->
-                    <a href="#" class="delete-link">삭제</a> <!-- 삭제 버튼 -->
+
+                <div class="comment-edit" id="comment-edit">
+                    <form id="comment-edit" action="/post/{{data.post.post_id}}/{{comment.comment_id}}/edit"
+                        method="POST">
+                        <textarea name="comment-edit" id="comment-edit"
+                            rows="3">{{ comment.comment_content|e }}</textarea>
+                        <button onclick="reset()">취소</button>
+                        <button type="submit">수정</button>
+                    </form>
+                </div>
+                
+                <div class="comment-actions" id="comment-action">
+                    <button type="button" class="edit-link" onclick="edit()">수정</button>
+                    <a href="/post/{{data.post.post_id}}/{{comment.comment_id}}/delete" class="delete-link">삭제</a>
                 </div>
             </li>
             {% endfor %}
         </ul>
     </div>
 
-    <script> /* 댓글 수정하는 것에 대한 스크립트*/
-        function editComment() {
-            var commentTextElement = document.getElementById('commentText');
-            var currentComment = commentTextElement.innerText;
-            var commentInput = document.createElement('textarea');
-            commentInput.value = currentComment;
-            commentInput.style.resize = 'none';
-            commentInput.style.border = '1px solid #ccc';
-            commentInput.style.padding = '5px';
-            commentInput.style.width = '100%';
-            var buttonContainer = document.createElement('div');
-            buttonContainer.className = 'button-container'; // 버튼을 감싸는 div 요소에 클래스 추가
-
-            var saveButton = document.createElement('button');
-            saveButton.textContent = '저장';
-            saveButton.style.border = 'none'; /* 테두리 제거 */
-            saveButton.style.background = 'none'; /* 배경 제거 */
-            saveButton.style.color = 'red'; /* 글자 색상 지정 */
-            saveButton.style.cursor = 'pointer'; /* 커서 모양 변경 */
-            saveButton.onclick = function () {
-                var editedComment = commentInput.value;
-                // 댓글을 서버로 전송하거나 다른 작업 수행
-                commentTextElement.innerText = editedComment;
-                commentInput.parentElement.removeChild(commentInput);
-                saveButton.parentElement.removeChild(saveButton);
-                cancelButton.parentElement.removeChild(cancelButton);
-                buttonContainer.parentElement.removeChild(buttonContainer);
-            };
-            var cancelButton = document.createElement('button');
-            cancelButton.textContent = '취소';
-            cancelButton.style.border = 'none'; /* 테두리 제거 */
-            cancelButton.style.background = 'none'; /* 배경 제거 */
-            cancelButton.style.color = 'red'; /* 글자 색상 지정 */
-            cancelButton.style.cursor = 'pointer'; /* 커서 모양 변경 */
-            cancelButton.onclick = function () {
-                commentTextElement.innerText = currentComment; // 수정 취소 시 기존 내용 유지
-                commentInput.parentElement.removeChild(commentInput);
-                saveButton.parentElement.removeChild(saveButton);
-                cancelButton.parentElement.removeChild(cancelButton);
-                buttonContainer.parentElement.removeChild(buttonContainer);
-            };
-            commentTextElement.innerHTML = '';
-            commentTextElement.appendChild(commentInput);
-            buttonContainer.appendChild(saveButton);
-            buttonContainer.appendChild(cancelButton);
-            commentTextElement.appendChild(buttonContainer); // 버튼 컨테이너를 댓글 텍스트 엘리먼트에 추가
+    <script>
+        function edit() {
+            document.getElementById("comment-content").style.display = "none";
+            document.getElementById("comment-edit").style.display = "block";
+            document.getElementById("comment-action").style.display = "none";
+        }
+        function reset() {
+            document.getElementById("comment-content").style.display = "block";
+            document.getElementById("comment-edit").style.display = "none";
+            document.getElementById("comment-action").style.display = "block";
         }
     </script>
+</body>
+
+</html>
