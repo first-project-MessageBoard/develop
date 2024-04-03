@@ -8,7 +8,6 @@
     margin-right: -150px; /* 로고와 "SpartaIM" 사이의 간격을 20px로 설정 */
     height: 110px; /* Adjust the height as needed */
     width: auto; /* Maintain aspect ratio */
-    
 }
 
 /* Change the color of "스파르타임" to black */
@@ -20,11 +19,7 @@
 
 #main-heading{
     font-size: 33px;
-
-
 }
-
-
 
 /* 마우스 호버시 링크 색상 변경 */
 .menu a:hover {
@@ -42,8 +37,6 @@
     color: black;
     margin-bottom: 30px;
     margin-top: -5px;
-    
-    
     
 }
 

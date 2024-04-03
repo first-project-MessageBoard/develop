@@ -51,6 +51,8 @@
         </div>
     </nav>
 
+    <div class="navbar-divider"></div>
+
     <div class="post">
         <h2 class="post-title">게시글 제목 <div class="links"><a href="#" class="edit-link">수정</a> <a href="#" class="delete-link">삭제</a></div></h2>
         <p class="post-content">
@@ -123,6 +125,7 @@
                         cancelButton.style.color = 'red'; /* 글자 색상 지정 */
                         cancelButton.style.cursor = 'pointer'; /* 커서 모양 변경 */
                         cancelButton.onclick = function() {
+                            commentTextElement.innerText = currentComment; // 수정 취소 시 기존 내용 유지
                             commentInput.parentElement.removeChild(commentInput);
                             saveButton.parentElement.removeChild(saveButton);
                             cancelButton.parentElement.removeChild(cancelButton);
