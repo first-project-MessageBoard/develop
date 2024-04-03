@@ -1,0 +1,84 @@
+<!Doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <link rel="stylesheet" type="text/css" href="static/style2.css">
+    <link rel="stylesheet" type="text/css" href="static/w_style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<link rel="stylesheet" type="text/css" href="static/style.css">
+
+
+<body>
+
+    <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
+        <div class="ms-3 d-flex align-items-center">
+            <img src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/images/sparta-logo.svg"
+                alt="">
+            <nav class="navbar navbar-expand-lg ">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">스파르타임</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="ms-auto">
+            <div class="menu">
+                <a class="nav-link" href="/">게시판</a>
+            </div>
+            <div class="menu">
+                <a class="nav-link" href="/write">글쓰기</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="search-container">
+        <span>검색</span>
+        <input type="text" name="keyword" placeholder="글을 검색하세요" class="search">
+    </div>
+    <div class="wrap title">
+        <h1><a href="#">게시판</a></h1>
+        <hr>
+    </div>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">번호</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in data %}
+            <tr>
+                <th scope="row">{{ post.post_id|e }}</th>
+
+                <td><a href="/post/1" class="link">{{ post.post_title|e }}</a></td>
+                <td>{{ post.post_author|e }}</td>
+                <td>{{ post.post_created_at|e }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+
+</html>
