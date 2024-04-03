@@ -47,7 +47,7 @@
     <div class="post">
         <h2 class="post-title">{{ data.post.post_title }}</h2>
         <div class="links">
-            <a href="#" class="edit-link">수정</a>
+            <a href="/edit/{{ data.post.post_id }}" class="edit-link">수정</a> <!-- 수정 링크 -->
             <form action="{{ url_for('delete_post', id=data.post.post_id) }}" method="post">
                 <button type="submit">삭제</button>
             </form>
@@ -93,7 +93,7 @@
                         saveButton.style.background = 'none'; /* 배경 제거 */
                         saveButton.style.color = 'red'; /* 글자 색상 지정 */
                         saveButton.style.cursor = 'pointer'; /* 커서 모양 변경 */
-                        saveButton.onclick = function() {
+                        saveButton.onclick = function () {
                             var editedComment = commentInput.value;
                             commentTextElement.innerText = editedComment;
                             commentInput.parentElement.removeChild(commentInput);
@@ -107,7 +107,7 @@
                         cancelButton.style.background = 'none'; /* 배경 제거 */
                         cancelButton.style.color = 'red'; /* 글자 색상 지정 */
                         cancelButton.style.cursor = 'pointer'; /* 커서 모양 변경 */
-                        cancelButton.onclick = function() {
+                        cancelButton.onclick = function () {
                             commentTextElement.innerText = currentComment; // 수정 취소 시 기존 내용 유지
                             commentInput.parentElement.removeChild(commentInput);
                             saveButton.parentElement.removeChild(saveButton);
