@@ -96,6 +96,7 @@ def post(id):
         db.session.commit()
 
     if request.method == "POST":
+        comment_content = request.form.get('comment_id')
         comment_content = request.form.get('comment')
         comment_writer = "익명"  # 임시 작성자
         comment_add(id, comment_content, comment_writer)
