@@ -49,6 +49,8 @@
         </div>
     </nav>
 
+    <div class="navbar-divider"></div>
+
     <div class="post">
         <h2 class="post-title">게시글 제목 <div class="links"><a href="#" class="edit-link">수정</a> <a href="#"
                     class="delete-link">삭제</a></div>
@@ -80,14 +82,65 @@
                     <span class="comment-author">작성자</span>
                     <span class="comment-date">2024-04-01</span>
                 </div>
-                <div class="comment-content">
-                    댓글 내용 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et lacus vitae nisi posuere
-                    dapibus vel vitae est. Integer vitae mauris et quam ullamcorper sodales.
+
+                <div class="comment"> 
+                    <p id="commentText">댓글 내용 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et lacus vitae nisi posuere
+                    dapibus vel vitae est. Integer vitae mauris et quam ullamcorper sodales..</p>
+                    
                 </div>
+                <script> /* 댓글 수정하는 것에 대한 스크립트*/
+                    function editComment() {
+                        var commentTextElement = document.getElementById('commentText');
+                        var currentComment = commentTextElement.innerText;
+
+                        var commentInput = document.createElement('textarea');
+                        commentInput.value = currentComment;
+                        commentInput.style.resize = 'none';
+                        commentInput.style.border = '1px solid #ccc';
+                        commentInput.style.padding = '5px';
+                        commentInput.style.width = '100%';
+
+                        var buttonContainer = document.createElement('div');
+                        buttonContainer.className = 'button-container'; // 버튼을 감싸는 div 요소에 클래스 추가
+
+                        var saveButton = document.createElement('button');
+                        saveButton.textContent = '저장';
+                        saveButton.style.border = 'none'; /* 테두리 제거 */
+                        saveButton.style.background = 'none'; /* 배경 제거 */
+                        saveButton.style.color = 'red'; /* 글자 색상 지정 */
+                        saveButton.style.cursor = 'pointer'; /* 커서 모양 변경 */
+                        saveButton.onclick = function() {
+                            var editedComment = commentInput.value;
+                            commentTextElement.innerText = editedComment;
+                            commentInput.parentElement.removeChild(commentInput);
+                            saveButton.parentElement.removeChild(saveButton);
+                            cancelButton.parentElement.removeChild(cancelButton);
+                            buttonContainer.parentElement.removeChild(buttonContainer);
+                        };
+
+                        var cancelButton = document.createElement('button');
+                        cancelButton.textContent = '취소';
+                        cancelButton.style.border = 'none'; /* 테두리 제거 */
+                        cancelButton.style.background = 'none'; /* 배경 제거 */
+                        cancelButton.style.color = 'red'; /* 글자 색상 지정 */
+                        cancelButton.style.cursor = 'pointer'; /* 커서 모양 변경 */
+                        cancelButton.onclick = function() {
+                            commentTextElement.innerText = currentComment; // 수정 취소 시 기존 내용 유지
+                            commentInput.parentElement.removeChild(commentInput);
+                            saveButton.parentElement.removeChild(saveButton);
+                            cancelButton.parentElement.removeChild(cancelButton);
+                            buttonContainer.parentElement.removeChild(buttonContainer);
+                        };
+
+                        commentTextElement.innerHTML = '';
+                        commentTextElement.appendChild(commentInput);
+                        buttonContainer.appendChild(saveButton);
+                        buttonContainer.appendChild(cancelButton);
+                        commentTextElement.appendChild(buttonContainer); // 버튼 컨테이너를 댓글 텍스트 엘리먼트에 추가
+                    }
+                </script>
                 <div class="comment-actions">
-
-
-                    <a href="#" class="edit-link">수정</a>
+                    <button onclick="editComment()">수정</button>
                     <a href="#" class="delete-link">삭제</a>
                 </div>
             </li>
