@@ -1,0 +1,83 @@
+.ms-3 img {
+    margin-right: 100px;
+    height: 110px;
+    width: auto;
+}
+
+.navbar .nav-link {
+    color: black;
+}
+
+.menu a:hover {
+    color: red;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 100px;
+    font-weight: bold;
+    font-size: 25px;
+    color: black;
+    margin-bottom: 50px;
+}
+
+.menu {
+    display: inline-block;
+    align-self: center;
+}
+
+.menu+.menu {
+    margin-left: 100px;
+}
+
+.menu:last-child {
+    margin-right: 100px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    margin: 0 50px;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.search-container span {
+    margin-right: 20px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.wrap.title hr {
+    display: block; /* 변경된 부분: hr 요소 표시 */
+}
+
+.wrap.title h1 a {
+    color: red;
+    font-size: 25px;
+    margin: 0 50px; /* 변경된 부분: 여백 조정 */
+    font-weight: bold;
+}
+
+.table {
+    margin-left: 50px;
+    margin-right: 50px;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+tr {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.link {
+    color: black;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: red;
+}
