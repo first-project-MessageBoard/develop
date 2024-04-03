@@ -2,24 +2,26 @@
     margin-top: 50px;
 }
 
+.ms-3 {
+    justify-content: center; /* 요소를 가로 방향으로 가운데 정렬 */
+}
+
 .ms-3 img {
-    margin-right: -150px; /* 로고와 "SpartaIM" 사이의 간격을 20px로 설정 */
-    height: 110px; /* Adjust the height as needed */
+    margin-right: -200px; /* 로고와 "SpartaIM" 사이의 간격을 20px로 설정 */
+    height: 40px; /* Adjust the height as needed */
     width: auto; /* Maintain aspect ratio */
-    
 }
 
 /* Change the color of "스파르타임" to black */
 .navbar .nav-link {
     color: black;
     
-    
 }
 
-#main-heading{
-    font-size: 33px;
-
-
+/* Horizontally align "스파르타임" with the logo image */
+.navbar .navbar-expand-lg {
+    display: flex;
+    align-items: center;
 }
 
 /* 마우스 호버시 링크 색상 변경 */
@@ -39,14 +41,15 @@
     display: flex; /* Flexbox 레이아웃 적용 */
     align-items: center; /* 기준선에 맞추어 정렬 */
     justify-content: space-between; /* 요소들을 최대한 분산 정렬 */
-    padding-left: 150px; /* 왼쪽 여백 추가 */
+    padding-left: 200px; /* 왼쪽 여백 추가 */
     font-weight: bold;
     font-size: 25px;
     color: black;
-    margin-bottom: 30px;
-    margin-top: -5px;
+    margin-bottom: 50px
+
     
 }
+
 
 .menu {
     display: inline-block; /* 인라인 블록 요소로 설정 */
@@ -58,7 +61,7 @@
 }
 
 .menu:last-child {
-    margin-right: 220px; /* 마지막 메뉴의 오른쪽 마진을 200px로 설정 */
+    margin-right: 200px; /* 마지막 메뉴의 오른쪽 마진을 200px로 설정 */
 }
 
 
@@ -111,12 +114,3 @@ textarea {
     color: white;
     border: 0px
 }
-
-.navbar-divider {
-    
-    border-top: 25px solid rgb(246, 76, 76);
-    margin: 10px 0;
-    border-bottom: none; /* 기존 아래쪽 테두리 제거 */
-    margin-bottom: 50px;
-}
-
