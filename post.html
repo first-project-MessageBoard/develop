@@ -52,7 +52,7 @@
     <div class="navbar-divider"></div>
 
     <div class="post">
-        <h2 class="post-title">게시글 제목 <div class="links"><a href="#" class="edit-link">수정</a> <a href="#"
+        <h2 class="post-title">게시글 제목 <div class="links"><a href="editpage.html" class="edit-link">수정</a> <a href="#"
                     class="delete-link">삭제</a></div>
         </h2>
         <p class="post-content">
@@ -83,10 +83,11 @@
                     <span class="comment-date">2024-04-01</span>
                 </div>
 
-                <div class="comment"> 
-                    <p id="commentText">댓글 내용 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et lacus vitae nisi posuere
-                    dapibus vel vitae est. Integer vitae mauris et quam ullamcorper sodales..</p>
-                    
+                <div class="comment">
+                    <p id="commentText">댓글 내용 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et lacus
+                        vitae nisi posuere
+                        dapibus vel vitae est. Integer vitae mauris et quam ullamcorper sodales..</p>
+
                 </div>
                 <script> /* 댓글 수정하는 것에 대한 스크립트*/
                     function editComment() {
@@ -109,7 +110,7 @@
                         saveButton.style.background = 'none'; /* 배경 제거 */
                         saveButton.style.color = 'red'; /* 글자 색상 지정 */
                         saveButton.style.cursor = 'pointer'; /* 커서 모양 변경 */
-                        saveButton.onclick = function() {
+                        saveButton.onclick = function () {
                             var editedComment = commentInput.value;
                             commentTextElement.innerText = editedComment;
                             commentInput.parentElement.removeChild(commentInput);
@@ -124,7 +125,7 @@
                         cancelButton.style.background = 'none'; /* 배경 제거 */
                         cancelButton.style.color = 'red'; /* 글자 색상 지정 */
                         cancelButton.style.cursor = 'pointer'; /* 커서 모양 변경 */
-                        cancelButton.onclick = function() {
+                        cancelButton.onclick = function () {
                             commentTextElement.innerText = currentComment; // 수정 취소 시 기존 내용 유지
                             commentInput.parentElement.removeChild(commentInput);
                             saveButton.parentElement.removeChild(saveButton);
