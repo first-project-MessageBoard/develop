@@ -1,10 +1,10 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판</title>
     <link rel="stylesheet" type="text/css" href="static/style.css">
     <link rel="stylesheet" type="text/css" href="static/style2.css">
     <link rel="stylesheet" type="text/css" href="static/w_style.css">
@@ -12,16 +12,12 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 
-<link rel="stylesheet" type="text/css" href="static/style.css">
-
-
 <body>
 
-    <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
+    <nav class="navbar border-bottom border-body justify-content-space-between" data-bs-theme="white">
         <div class="ms-3 d-flex align-items-center">
-            <img src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/images/sparta-logo.svg"
-                alt="">
-            <nav class="navbar navbar-expand-lg ">
+            <img src="/static/image.png" alt="">
+            <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +38,7 @@
                 <a class="nav-link" href="/">게시판</a>
             </div>
             <div class="menu">
-                <a class="nav-link" href="/write">글쓰기</a>
+                <a class="nav-link" href="writing.html">글쓰기</a>
             </div>
         </div>
     </nav>
@@ -56,7 +52,6 @@
         <hr>
     </div>
 
-
     <table class="table">
         <thead>
             <tr>
@@ -69,16 +64,15 @@
         <tbody>
             {% for post in data %}
             <tr>
-                <th scope="row">{{ post.post_id|e }}</th>
-
-                <td><a href="/post/1" class="link">{{ post.post_title|e }}</a></td>
-                <td>{{ post.post_author|e }}</td>
-                <td>{{ post.post_created_at|e }}</td>
+                <th scope="row">{{ post.post_id }}</th>
+                <td><a href="/post/{{ post.post_id }}" class="link">{{ post.post_title }}</a></td>
+                <td>{{ post.post_author }}</td>
+                <td>{{ post.post_created_at }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-</body>
 
+</body>
 
 </html>

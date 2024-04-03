@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -14,8 +14,6 @@ db = SQLAlchemy(app)
 
 
 # 모델 정의
-
-
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post_title = db.Column(db.String(100), nullable=False)
@@ -23,10 +21,7 @@ class Post(db.Model):
     post_created_at = db.Column(
         db.DateTime, nullable=False, default=db.func.now())
     post_author = db.Column(db.String(50), nullable=False,
-                            default='Anonymous')  # 작성자 열 추가
-
-    def __repr__(self):
-        return f'{self.post_id} {self.post_title} {self.post_content}'
+                            default='Anonymous')
 
 
 class Comment(db.Model):
@@ -42,11 +37,11 @@ class Comment(db.Model):
 with app.app_context():
     db.create_all()
 
+
 # 게시판 글 조회
-
-
 @app.route('/')
 def index():
+    image_url = "https://postfiles.pstatic.net/MjAyNDA0MDJfMjA0/MDAxNzEyMDUzNTg2MzA4.bBTRt6qjNaELTNrH9sOoF14WWyarzjSCQ1fmgWObFVgg.cLeRNAaZEJjN9Dqhx-oN0DJeIlNIQ6cfwhngGlGLQMYg.PNG/%EC%8A%A4%ED%8C%8C%EB%A5%B4%ED%83%80%EC%9E%84_%EB%A1%9C%EA%B3%A0.png?type=w966"
     posts = Post.query.order_by(Post.post_created_at.desc()).all()
     return render_template('index.html', data=posts)
 
@@ -54,12 +49,11 @@ def index():
 
 
 @app.route('/post', methods=['POST'])
-def add_post():
+def create_post():
     title = request.form['title']
     content = request.form['content']
-    author = request.form['author']  # 작성자 정보 가져오기
-    new_post = Post(post_title=title, post_content=content,
-                    post_author=author)  # 작성자 정보 추가
+    author = request.form.get('author', 'Anonymous')
+    new_post = Post(post_title=title, post_content=content, post_author=author)
     db.session.add(new_post)
     db.session.commit()
     return redirect(url_for('index'))
@@ -67,14 +61,14 @@ def add_post():
 # 글 작성 페이지로 이동
 
 
-@app.route('/write')
+@app.route('/writing.html')
 def write_post():
     return render_template('writing.html')
 
 # 게시글
 
 
-@app.route('/post/<id>/', methods=['GET', 'POST'])
+@app.route('/post/<int:id>/', methods=['GET', 'POST'])
 def post(id):
     # 댓글 조회
     def comments_list(p_id):
@@ -89,13 +83,7 @@ def post(id):
         db.session.add(new_comment)
         db.session.commit()
 
-    # 댓글 수정
-    def comment_update(p_id, c_id, content):
-        comment_data = Comment.query.filter_by(
-            post_id=p_id, comment_id=c_id).first()
-        comment_data.comment_content = content
-        db.session.add(comment_data)
-        db.session.commit()
+    
 
     if request.method == "POST":
         comment_content = request.form.get('comment')
@@ -112,6 +100,18 @@ def post(id):
 
     return render_template('post.html', data=context)
 
+# 댓글 수정
+@app.route('/post/<p_id>/<c_id>/edit', methods=['GET', 'POST'])
+def comment_update(p_id, c_id):
+    if request.method == "POST":
+        new_content = request.form.get('comment-edit')
+        comment_data = Comment.query.filter_by(
+            post_id=p_id, comment_id=c_id).first()
+        comment_data.comment_content = new_content
+        db.session.add(comment_data)
+        db.session.commit()
+        return redirect(url_for('post', id=p_id))
+
 # 댓글 삭제
 
 
@@ -121,7 +121,6 @@ def comment_delete(p_id, c_id):
         post_id=p_id, comment_id=c_id).first()
     db.session.delete(comment_data)
     db.session.commit()
-    print('here')
     return redirect(url_for('post', id=p_id))
 
 
@@ -132,14 +131,13 @@ def edit_post(id):
     if request.method == 'POST':
         post.post_title = request.form['title']
         post.post_content = request.form['content']
-        post.post_author = request.form['author']  # 작성자 정보 업데이트
+        post.post_author = request.form['author']
         db.session.commit()
         return redirect(url_for('index'))
     return render_template('edit.html', post=post)
 
+
 # 글 삭제
-
-
 @app.route('/delete/<int:id>', methods=['POST'])
 def delete_post(id):
     post = Post.query.get_or_404(id)

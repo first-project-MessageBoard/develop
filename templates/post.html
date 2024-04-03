@@ -1,25 +1,20 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <title>게시글</title>
-    <style>
-
-    </style>
-
 </head>
 
-<link rel="stylesheet" type="text/css" href="static/style2.css">
+<link rel="stylesheet" type="text/css" href="static/W_style.css">
 <link rel="stylesheet" type="text/css" href="static/style.css">
-
+<link rel="stylesheet" type="text/css" href="static/style2.css">
 
 <body>
     <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
@@ -47,7 +42,7 @@
                 <a class="nav-link" href="/">게시판</a>
             </div>
             <div class="menu">
-                <a class="nav-link" href="/write">글쓰기</a>
+                <a class="nav-link" href="/writing.html">글쓰기</a>
             </div>
         </div>
     </nav>
@@ -61,16 +56,14 @@
         </p>
     </div>
 
-
     <div class="comment-container">
         <!-- 댓글 폼 -->
         <div class="comment-form">
-            <form id="comment" action="/post/{{data.post.post_id}}/" method="POST">
+            <form id="comment" action="/post/{{ data.post.post_id }}" method="POST">
                 <textarea name="comment" id="comment" rows="3" placeholder="댓글을 입력하세요"></textarea>
                 <button type="submit">댓글 작성</button>
             </form>
         </div>
-
 
         <ul class="comment-list">
             <!-- 댓글 아이템 -->
@@ -80,22 +73,41 @@
                     <span class="comment-author">{{ comment.comment_writer|e }}</span>
                     <span class="comment-date">{{ comment.comment_created_at|e }}</span>
                 </div>
-                <div class="comment-content">
+                <div class="comment-content" id="comment-content">
                     {{ comment.comment_content|e }}
                 </div>
-                <div class="comment-actions">
-                    <a href="#" class="edit-link">수정</a>
-                    <a href="/post/{{data.post.post_id}}/{{comment.comment_id}}/delete"
-                        class="delete-link">삭제</a>
+
+                <div class="comment-edit" id="comment-edit">
+                    <form id="comment-edit" action="/post/{{data.post.post_id}}/{{comment.comment_id}}/edit"
+                        method="POST">
+                        <textarea name="comment-edit" id="comment-edit"
+                            rows="3">{{ comment.comment_content|e }}</textarea>
+                        <button onclick="reset()">취소</button>
+                        <button type="submit">수정</button>
+                    </form>
+                </div>
+                
+                <div class="comment-actions" id="comment-action">
+                    <button type="button" class="edit-link" onclick="edit()">수정</button>
+                    <a href="/post/{{data.post.post_id}}/{{comment.comment_id}}/delete" class="delete-link">삭제</a>
                 </div>
             </li>
             {% endfor %}
         </ul>
-
-
     </div>
 
+    <script>
+        function edit() {
+            document.getElementById("comment-content").style.display = "none";
+            document.getElementById("comment-edit").style.display = "block";
+            document.getElementById("comment-action").style.display = "none";
+        }
+        function reset() {
+            document.getElementById("comment-content").style.display = "block";
+            document.getElementById("comment-edit").style.display = "none";
+            document.getElementById("comment-action").style.display = "block";
+        }
+    </script>
 </body>
-
 
 </html>
