@@ -23,8 +23,6 @@
             font-weight: 400;
             font-style: normal;
         }
-
-
     </style>
 
 
@@ -36,23 +34,23 @@
 <body>
     <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
         <div class="ms-3 d-flex align-items-center">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" id = ms-3_img alt="로고">
-</div>
-            <nav class="navbar navbar-expand-lg ">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" id="spartime_banner" href="#">스파르타임</a>
-                            </li>
-                        </ul>
-                    </div>
+            <img src="{{ url_for('static', filename='images/logo.png') }}" id=ms-3_img alt="로고">
+        </div>
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" id="spartime_banner" href="#">스파르타임</a>
+                        </li>
+                    </ul>
                 </div>
-            </nav>
+            </div>
+        </nav>
         </div>
         <div class="ms-auto">
             <div class="menu">
@@ -67,49 +65,48 @@
     <!-- 글 작성 폼 -->
     <div class="navbar-divider"></div>
 
-    <body>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-DsjeH80DK9jLDowz+UAfPpB8HqXsPi0ekftbg4E5Lxlz+4fq1I0P1NddThf2I3um"
-            crossorigin="anonymous"></script>
-        <!-- 주석 처리 되어 있었음 ㅇ.ㅇ? !! -->
-        <form action="/post" method="POST">
-            <table>
-                <tr>
-                    <td>
-                        <h2>글쓰기</h2>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="header">제목</td>
-                </tr>
-                <tr>
-                    <td><input type="text" placeholder="제목을 입력하세요" name="title"></td>
-                </tr>
-                <tr>
-                    <td class="header">내용</td>
-                </tr>
-                <tr>
-                    <!-- name=content 가 아니였음 !! -->
-                    <td><textarea placeholder="내용을 입력하세요" name="content"></textarea></td>
-                </tr>
-                <tr>
-                    <td>
-                        <button id="postButton" class="btn btn-primary">게시</button>
-                        <button id="cancelButton" class="btn btn-secondary">작성 취소</button>
-                    </td>
-                </tr>
-            </table>
-        </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-DsjeH80DK9jLDowz+UAfPpB8HqXsPi0ekftbg4E5Lxlz+4fq1I0P1NddThf2I3um"
+        crossorigin="anonymous"></script>
+    <!-- 주석 처리 되어 있었음 ㅇ.ㅇ? !! -->
+    <form action="/post" method="POST">
+        <table>
+            <tr>
+                <td>
+                    <h2>글쓰기</h2>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">제목</td>
+            </tr>
+            <tr>
+                <td><input type="text" placeholder="제목을 입력하세요" name="title"></td>
+            </tr>
+            <tr>
+                <td class="header">내용</td>
+            </tr>
+            <tr>
+                <!-- name=content 가 아니였음 !! -->
+                <td><textarea placeholder="내용을 입력하세요" name="content"></textarea></td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="postButton" class="btn btn-primary">게시</button>
+                    <button id="cancelButton" class="btn btn-secondary">작성 취소</button>
+                </td>
+            </tr>
+        </table>
+    </form>
 
-        <!-- 댓글 삭제 폼 -->
-        {% if data %}
-        {% for comment in data.comments %}
-        <form action="/post/{{ data.post.post_id }}/delete/{{ comment.comment_id }}" method="POST">
-            <button type="submit">삭제</button>
-        </form>
-        {% endfor %}
-        {% endif %}
-    </body>
+    <!-- 댓글 삭제 폼 -->
+    {% if data %}
+    {% for comment in data.comments %}
+    <form action="/post/{{ data.post.post_id }}/delete/{{ comment.comment_id }}" method="POST">
+        <button type="submit">삭제</button>
+    </form>
+    {% endfor %}
+    {% endif %}
+
 </body>
 
 </html>
