@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
-    <title>회원가입</title>
+    <title>로그인</title>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hahmlet&display=swap');
@@ -68,9 +68,6 @@
                 <a class="nav-link" href='/login.html'>로그인</a>
             </div>
         </div>
-
-
-        </div>
     </nav>
 
     <div class="navbar-divider"></div>
@@ -87,7 +84,7 @@
             <td colspan="2" class="text-center text-danger">{{ error }}</td>
         </tr>
         {% endif %}
-        <form id="loginForm" action="/login" method="POST">
+        <form id="loginForm" action="/login" method="POST" onsubmit="login(); return false;">
             <tr>
                 <td class="id">ID</td>
             </tr>
@@ -108,11 +105,28 @@
         </form>
     </table>
 
+    <!-- 모달 창 추가 -->
+    <div class="modal" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">로그인 결과</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 결과 메시지가 여기에 표시됩니다. -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function login() {
             var id = document.getElementById("id").value;
             var password = document.getElementById("password").value;
-
             // 서버로 ID와 비밀번호 전송
             fetch('/login', {
                 method: 'POST',
@@ -120,30 +134,26 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    id: id, // 키 이름을 "id"로 수정
+                    id: id,
                     password: password
                 })
             })
                 .then(response => response.text())
                 .then(data => {
-                    // 서버에서 반환한 응답을 확인하여 알림창에 표시
+                    // 모달 창에 로그인 결과 표시
+                    var loginModalBody = document.getElementById("loginModal").querySelector(".modal-body");
                     if (data === "로그인 성공!") {
-                        // 로그인 성공 메시지를 URL 쿼리 매개변수에 추가하여 리다이렉트
-                        window.location.href = "/?success=로그인 성공!";
+                        loginModalBody.innerHTML = "<p>로그인 성공!</p>";
                     } else {
-                        alert("ID 또는 비밀번호가 잘못되었습니다.");
+                        loginModalBody.innerHTML = "<p>ID 또는 비밀번호가 잘못되었습니다.</p>";
                     }
+                    // 모달 창 띄우기
+                    var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                    loginModal.show();
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-        }
-
-        // 서버에서 리다이렉트를 통해 로그인 성공 메시지를 받는 대신, 클라이언트 측에서 표시
-        const urlParams = new URLSearchParams(window.location.search);
-        const successMessage = urlParams.get('success');
-        if (successMessage) {
-            alert(successMessage);
         }
     </script>
 
