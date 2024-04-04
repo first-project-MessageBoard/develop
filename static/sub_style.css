@@ -34,3 +34,42 @@ input {
     color: white;
     border: 0px
 }
+
+
+
+#ms-3_img {
+    
+    height: 100px;
+    width: auto;
+    margin-left: -220px
+}
+
+
+#spartime_banner{
+font-size: 35px;
+margin-left: -180px
+}
+
+.navbar .nav-link {
+    color: black;
+    
+}
+
+.menu a:hover {
+    color: red;
+}
+
+
+
+.menu {
+    display: inline-block;
+    align-self: center;
+}
+
+.menu+.menu {
+    margin-left: 100px;
+}
+
+.menu:last-child {
+    margin-right: 100px;
+}

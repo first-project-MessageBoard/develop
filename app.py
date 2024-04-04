@@ -164,7 +164,7 @@ def delete_post(id):
 
 
 # 로그인 페이지
-@app.route('/login')
+@app.route('/login',methods=['GET','POST'])
 def login():
     return render_template('login.html')
 
