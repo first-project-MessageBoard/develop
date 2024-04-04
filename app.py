@@ -28,6 +28,7 @@ class Post(db.Model):
     def comment_count(self):
         return Comment.query.filter_by(post_id=self.post_id).count()
 
+
 class Comment(db.Model):
     comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
@@ -38,9 +39,9 @@ class Comment(db.Model):
 
 
 class User(db.Model):
-    user_id = db.column(db.String(12), primary_key=True, nullable=False)
-    user_pw = db.column(db.String(20), nullable=False)
-    user_name = db.column(db.String(8), nullable=False)
+    user_id = db.Column(db.String(20), primary_key=True, nullable=False)
+    user_pw = db.Column(db.String(50), nullable=False)
+    user_name = db.Column(db.String(20), nullable=False)
 
 
 # 테이블 생성
@@ -93,7 +94,6 @@ def post(id):
         db.session.commit()
 
     if request.method == "POST":
-        comment_content = request.form.get('comment_id')
         comment_content = request.form.get('comment')
         comment_writer = "익명"  # 임시 작성자
         comment_add(id, comment_content, comment_writer)
@@ -107,7 +107,7 @@ def post(id):
     context = {
         "post": post,
         "comments": comments,
-        "comment_count": comment_count  # 댓글 수 추가
+        "comment_count": comment_count
     }
 
     return render_template('post.html', data=context)
@@ -163,6 +163,26 @@ def delete_post(id):
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for('index'))
+
+
+# 로그인 페이지
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+# 회원가입 페이지
+
+
+@app.route('/register')
+def register():
+    
+    
+    user_name = request.form.get('username')
+    user_id = request.form.get('id')
+    user_pw = request.form.get('password')
+    user_pw_check = request.form.get('confirm_password')
+    user_data = User.query.all()
+    return render_template('submit.html', data = user_data)
 
 
 if __name__ == '__main__':

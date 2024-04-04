@@ -44,8 +44,16 @@
             <div class="menu">
                 <a class="nav-link" href="/writing.html">글쓰기</a>
             </div>
+            <div class="menu">
+                <a class="nav-link" href="/register">회원가입</a>
+            </div>
+            <div class="menu">
+                <a class="nav-link" href="/login">로그인</a>
+            </div>
         </div>
     </nav>
+
+    <div class="navbar-divider"></div>
 
     <!-- 게시글 관련 -->
     <div class="post">
@@ -89,7 +97,7 @@
                         <button type="submit">수정</button>
                     </form>
                 </div>
-                
+
                 <div class="comment-actions" id="comment-action">
                     <button type="button" class="edit-link" onclick="edit()">수정</button>
                     <a href="/post/{{data.post.post_id}}/{{comment.comment_id}}/delete" class="delete-link">삭제</a>

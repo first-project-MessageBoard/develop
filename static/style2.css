@@ -72,6 +72,19 @@
     
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* 수정 링크 스타일 */
 .post-title .edit-link{
 color: #777;
@@ -175,6 +188,20 @@ float: right; /* 오른쪽으로 정렬 */
 background-color: rgb(233, 7, 7);
 }
 
+.textarea {
+    width: calc(100% - 20px); /* 화면 크기에서 좌우 여백을 뺀 크기로 설정 */
+    max-width: 600px; /* 최대 가로 크기 지정 */
+    resize: none; /* 사용자가 텍스트 영역의 크기를 조절하지 못하도록 설정 */
+    margin-bottom: 10px; /* 하단 여백 지정 */
+}
+
+.button-container {
+    text-align: right; /* 버튼 컨테이너를 오른쪽으로 정렬 */
+}
+.button-container button {
+    margin-left: 10px; /* 버튼 사이 간격 조절 */
+}
+
 .comment-edit {
     display: none;
 }
@@ -199,17 +226,3 @@ background-color: rgb(233, 7, 7);
 .comment-edit button:hover {
     background-color: rgb(233, 7, 7);
     }
-
-.textarea {
-    width: calc(100% - 20px); /* 화면 크기에서 좌우 여백을 뺀 크기로 설정 */
-    max-width: 600px; /* 최대 가로 크기 지정 */
-    resize: none; /* 사용자가 텍스트 영역의 크기를 조절하지 못하도록 설정 */
-    margin-bottom: 10px; /* 하단 여백 지정 */
-}
-
-.button-container {
-    text-align: right; /* 버튼 컨테이너를 오른쪽으로 정렬 */
-}
-.button-container button {
-    margin-left: 10px; /* 버튼 사이 간격 조절 */
-}
