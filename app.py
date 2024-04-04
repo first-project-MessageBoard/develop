@@ -4,6 +4,18 @@ import os
 
 app = Flask(__name__)
 
+
+
+#이미지파일업로드
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
 # 연결 설정
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
@@ -87,6 +99,27 @@ def post(id):
         db.session.add(new_comment)
         db.session.commit()
 
+    if request.method == "POST":
+        comment_content = request.form.get('comment_id')
+        comment_content = request.form.get('comment')
+        comment_writer = "익명"  # 임시 작성자
+        comment_add(id, comment_content, comment_writer)
+
+    post = Post.query.filter_by(post_id=id).first()
+    comments = comments_list(id)
+
+    # 댓글 수 계산
+    comment_count = len(comments)
+
+    context = {
+        "post": post,
+        "comments": comments,
+        "comment_count": comment_count  # 댓글 수 추가
+    }
+
+    return render_template('post.html', data=context)
+
+
 # 댓글 수정
 @app.route('/post/<p_id>/<c_id>/edit', methods=['GET', 'POST'])
 def comment_update(p_id, c_id):
@@ -99,16 +132,6 @@ def comment_update(p_id, c_id):
         db.session.commit()
         return redirect(url_for('post', id=p_id))
 
-    # 댓글 수 계산
-    comment_count = len(comments)
-
-    context = {
-        "post": post,
-        "comments": comments,
-        "comment_count": comment_count  # 댓글 수 추가
-    }
-
-    return render_template('post.html', data=context)
 
 # 댓글 삭제
 
