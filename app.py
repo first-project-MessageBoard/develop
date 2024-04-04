@@ -4,6 +4,11 @@ import os
 
 app = Flask(__name__)
 
+
+
+
+
+
 # 연결 설정
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
@@ -21,7 +26,8 @@ class Post(db.Model):
     post_content = db.Column(db.Text, nullable=False)
     post_created_at = db.Column(
         db.DateTime, nullable=False, default=db.func.now())
-    post_author = db.Column(db.String(50), nullable=False, default='익명')
+    post_author = db.Column(db.String(50), nullable=False,
+                            default='Anonymous')
 
     # 댓글 수를 세는 메서드
     @property
@@ -95,6 +101,7 @@ def post(id):
         db.session.commit()
 
     if request.method == "POST":
+        comment_content = request.form.get('comment_id')
         comment_content = request.form.get('comment')
         comment_writer = "익명"  # 임시 작성자
         comment_add(id, comment_content, comment_writer)
@@ -128,9 +135,7 @@ def comment_update(p_id, c_id):
         return redirect(url_for('post', id=p_id))
 
 # 댓글 삭제
-
-
-@app.route('/post/<p_id>/delete/<c_id>', methods=['POST'])
+@app.route('/post/<p_id>/<c_id>/delete', methods=['POST'])
 def comment_delete(p_id, c_id):
     comment_data = Comment.query.filter_by(
         post_id=p_id, comment_id=c_id).first()
@@ -191,7 +196,12 @@ def login_post():
         return "ID 또는 비밀번호가 잘못되었습니다."
 
 
+# 회원가입 페이지
 
+
+@app.route('/register')
+def register():
+    return render_template('submit.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
