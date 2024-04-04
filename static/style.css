@@ -106,3 +106,32 @@ tr {
     background-color: red; /* 드롭다운 메뉴가 열렸을 때 버튼이 클릭되었거나 마우스를 올렸을 때 배경 색상 */
     color: white; /* 드롭다운 메뉴가 열렸을 때 버튼이 클릭되었거나 마우스를 올렸을 때 텍스트 색상 */
 }
+
+
+
+
+
+.tbody_post tr {
+    border-bottom: 2px solid rgb(209, 206, 206);
+}
+
+.thead_scope th {
+    padding-left: 10px; /* 좌측 여백 */
+    padding-right: 10px; /* 우측 여백 */
+}
+
+.thead_scope th:nth-child(1) {
+    width: 40%; /* 제목 열 너비 */
+}
+
+.thead_scope th:nth-child(2) {
+    width: 7%; /* 댓글 열 너비 */
+}
+
+.thead_scope th:nth-child(3) {
+    width: 10%; /* 작성자 열 너비 */
+}
+
+.thead_scope th:nth-child(4) {
+    width: 10%; /* 날짜 열 너비 */
+}

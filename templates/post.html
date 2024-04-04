@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
 
 
 
@@ -28,6 +30,10 @@
 
 
 </head>
+
+<link rel="stylesheet" type="text/css" href="static/W_style.css">
+<link rel="stylesheet" type="text/css" href="static/style.css">
+<link rel="stylesheet" type="text/css" href="static/style2.css">
 
 <link rel="stylesheet" type="text/css" href="static/W_style.css">
 <link rel="stylesheet" type="text/css" href="static/style.css">
@@ -53,7 +59,7 @@
                 </div>
             </div>
         </nav>
-        </div>
+
         <div class="ms-auto">
             <div class="menu">
                 <a class="nav-link" href="/">게시판</a>
@@ -61,15 +67,12 @@
             <div class="menu">
                 <a class="nav-link" href="/writing.html">글쓰기</a>
             </div>
-
-        </div>
-        <div class="menu">
-            <a class="nav-link" href="submit.html">회원가입</a>
-        </div>
-        <div class="menu">
-            <a class="nav-link" href="/login.html">로그인</a>
-        </div>
-
+            <div class="menu">
+                <a class="nav-link" href="/register">회원가입</a>
+            </div>
+            <div class="menu">
+                <a class="nav-link" href="/login.html">로그인</a>
+            </div>
         </div>
     </nav>
 
@@ -105,40 +108,38 @@
                     <span class="comment-author">{{ comment.comment_writer|e }}</span>
                     <span class="comment-date">{{ comment.comment_created_at|e }}</span>
                 </div>
-                <div class="comment-content" id="comment-content">
+                <div class="comment-content" id="comment-content-{{ comment.comment_id }}">
                     {{ comment.comment_content|e }}
                 </div>
 
-                <div class="comment-edit" id="comment-edit">
-                    <form id="comment-edit" action="/post/{{data.post.post_id}}/{{comment.comment_id}}/edit"
-                        method="POST">
-                        <textarea name="comment-edit" id="comment-edit"
-                            rows="1">{{ comment.comment_content|e }}</textarea>
-
-                        <button onclick="reset()">취소</button>
+                <div class="comment-edit" id="comment-edit-{{ comment.comment_id }}" style="display: none;">
+                    <form action="/post/{{ data.post.post_id }}/{{ comment.comment_id }}/edit" method="POST">
+                        <textarea name="comment-edit" rows="1">{{ comment.comment_content|e }}</textarea>
+                        <button type="button" onclick="reset({{ comment.comment_id }})">취소</button>
                         <button type="submit">수정</button>
                     </form>
                 </div>
 
-                <div class="comment-actions" id="comment-action">
-                    <button type="button" class="edit-link" onclick="edit()">수정</button>
-                    <a href="/post/{{data.post.post_id}}/{{comment.comment_id}}/delete" class="delete-link">삭제</a>
+                <div class="comment-actions" id="comment-action-{{ comment.comment_id }}">
+                    <button type="button" class="edit-link" onclick="edit({{ comment.comment_id }})">수정</button>
+                    <a href="/post/{{ data.post.post_id }}/{{ comment.comment_id }}/delete" class="delete-link">삭제</a>
                 </div>
             </li>
             {% endfor %}
         </ul>
+
     </div>
 
     <script>
-        function edit() {
-            document.getElementById("comment-content").style.display = "none";
-            document.getElementById("comment-edit").style.display = "block";
-            document.getElementById("comment-action").style.display = "none";
+        function edit(commentId) {
+            document.getElementById("comment-content-" + commentId).style.display = "none";
+            document.getElementById("comment-edit-" + commentId).style.display = "block";
+            document.getElementById("comment-action-" + commentId).style.display = "none";
         }
-        function reset() {
-            document.getElementById("comment-content").style.display = "block";
-            document.getElementById("comment-edit").style.display = "none";
-            document.getElementById("comment-action").style.display = "block";
+        function reset(commentId) {
+            document.getElementById("comment-content-" + commentId).style.display = "block";
+            document.getElementById("comment-edit-" + commentId).style.display = "none";
+            document.getElementById("comment-action-" + commentId).style.display = "block";
         }
     </script>
 

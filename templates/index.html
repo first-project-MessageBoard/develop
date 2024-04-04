@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
 
 
     <style>
@@ -69,6 +71,7 @@
             <a class="nav-link" href="/login.html">로그인</a>
         </div>
 
+
         </div>
     </nav>
 
@@ -82,6 +85,9 @@
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-bs-toggle="dropdown" aria-expanded="false">
+                    정렬 옵션
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                     최신 순
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -89,6 +95,17 @@
                     <li><a class="dropdown-item" href="/most_comments">댓글 많은 순</a></li>
                     <li><a class="dropdown-item" href="/least_comments">댓글 적은 순</a></li>
                 </ul>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        var dropdownMenu = document.querySelector(".dropdown-menu");
+
+                        dropdownMenu.addEventListener("click", function (e) {
+                            var selectedText = e.target.textContent.trim();
+                            var mainToggleButton = document.querySelector("#dropdownMenuButton");
+                            mainToggleButton.textContent = selectedText;
+                        });
+                    });
+                </script>
             </div>
         </div>
     </div>
@@ -98,11 +115,8 @@
     </div>
 
 
-
-
-
     <table class="table">
-        <thead>
+        <thead class="thead_scope">
             <tr>
                 <th scope="col">제목</th>
                 <th scope="col">댓글</th>
@@ -110,11 +124,11 @@
                 <th scope="col">날짜</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="tbody_post">
             {% for post in data %}
             <tr>
                 <td><a href="/post/{{ post.post_id }}" class="link">{{ post.post_title }}</a></td>
-                <th scope="row">{{ post.comment_count }}</th>
+                <td scope="row">{{ post.comment_count }}</td>
                 <td>{{ post.post_author }}</td>
                 <td>{{ post.post_created_at }}</td>
             </tr>

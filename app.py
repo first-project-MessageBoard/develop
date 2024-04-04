@@ -5,6 +5,11 @@ import os
 
 app = Flask(__name__)
 
+
+
+
+
+
 # 연결 설정
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
@@ -22,7 +27,8 @@ class Post(db.Model):
     post_content = db.Column(db.Text, nullable=False)
     post_created_at = db.Column(
         db.DateTime, nullable=False, default=db.func.now())
-    post_author = db.Column(db.String(50), nullable=False, default='익명')
+    post_author = db.Column(db.String(50), nullable=False,
+                            default='Anonymous')
 
     # 댓글 수를 세는 메서드
     @property
@@ -96,6 +102,7 @@ def post(id):
         db.session.commit()
 
     if request.method == "POST":
+        comment_content = request.form.get('comment_id')
         comment_content = request.form.get('comment')
         comment_writer = "익명"  # 임시 작성자
         comment_add(id, comment_content, comment_writer)
@@ -128,15 +135,14 @@ def comment_update(p_id, c_id):
         return redirect(url_for('post', id=p_id))
 
 # 댓글 삭제
-
-
-@app.route('/post/<p_id>/delete/<c_id>', methods=['POST'])
+@app.route('/post/<p_id>/<c_id>/delete', methods=['GET','POST'])
 def comment_delete(p_id, c_id):
     comment_data = Comment.query.filter_by(
         post_id=p_id, comment_id=c_id).first()
     db.session.delete(comment_data)
     db.session.commit()
     return redirect(url_for('post', id=p_id))
+
 
 # 글 수정 페이지로 이동
 
@@ -218,3 +224,28 @@ def least_comments():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+# 오래된 순으로 정렬
+@app.route('/oldest')
+def oldest():
+    posts = Post.query.order_by(Post.post_created_at).all()
+    return render_template('index.html', data=posts)
+
+# 댓글 많은 순으로 정렬
+
+
+@app.route('/most_comments')
+def most_comments():
+    posts = Post.query.all()
+    posts.sort(key=lambda post: post.comment_count, reverse=True)
+    return render_template('index.html', data=posts)
+
+# 댓글 적은 순으로 정렬
+
+
+@app.route('/least_comments')
+def least_comments():
+    posts = Post.query.all()
+    posts.sort(key=lambda post: post.comment_count)
+    return render_template('index.html', data=posts)
