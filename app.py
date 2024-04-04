@@ -51,6 +51,8 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
+login_user_name = '익명'
+
 # 게시판 글 조회
 
 
@@ -66,7 +68,7 @@ def index():
 def create_post():
     title = request.form['title']
     content = request.form['content']
-    author = request.form.get('author', '익명')
+    author = request.form.get('author', login_user_name)
     new_post = Post(post_title=title, post_content=content, post_author=author)
     db.session.add(new_post)
     db.session.commit()
@@ -99,7 +101,7 @@ def post(id):
 
     if request.method == "POST":
         comment_content = request.form.get('comment')
-        comment_writer = "익명"  # 임시 작성자
+        comment_writer = login_user_name
         comment_add(id, comment_content, comment_writer)
 
     post = Post.query.filter_by(post_id=id).first()
@@ -111,7 +113,8 @@ def post(id):
     context = {
         "post": post,
         "comments": comments,
-        "comment_count": comment_count
+        "comment_count": comment_count,
+        "login_user_name": login_user_name
     }
 
     return render_template('post.html', data=context)
@@ -123,7 +126,7 @@ def post(id):
 @app.route('/post/<p_id>/<c_id>/edit', methods=['GET', 'POST'])
 def comment_update(p_id, c_id):
     if request.method == "POST":
-        new_content = request.form.get('comment-edit')
+        new_content = request.form.get('comment-edit-content')
         comment_data = Comment.query.filter_by(
             post_id=p_id, comment_id=c_id).first()
         comment_data.comment_content = new_content
@@ -191,14 +194,16 @@ def login_post():
     if user and user.user_pw == password:  # 비밀번호를 평문으로 비교
         # 사용자가 존재하고 비밀번호가 일치할 경우 로그인 성공
         # 로그인 성공 후 index 페이지로 리다이렉트하며 성공 메시지 전달
+        global user_name
+        user_name = user.user_name
         return redirect(url_for('index', success="로그인 성공!"))
     else:
         # 로그인 실패
         return render_template('login.html', error="ID 또는 비밀번호가 잘못되었습니다.")
 
 
-# 로그인 페이지
-@app.route('/login.html', methods=['POST'])
+# 회원가입 성공
+@app.route('/register/success', methods=['POST'])
 def register_user():
     if request.method == "POST":
         user_name = request.form.get('username')

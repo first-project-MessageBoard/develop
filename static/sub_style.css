@@ -32,5 +32,10 @@ input {
 .btn-primary {
     background-color: rgb(240, 39, 39);
     color: white;
+    width: 100px; /* 원하는 너비로 조정합니다. */
     border: 0px
 }
+
+#pw-len-check-warning, #pw-check-warning, #id-len-check-warning, #id-check-warning,#name-len-check-warning,#name-check-warning{
+    color: red;}
+
