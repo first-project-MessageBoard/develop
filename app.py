@@ -190,5 +190,30 @@ def login_post():
         return "ID 또는 비밀번호가 잘못되었습니다."
 
 
+# 오래된 순으로 정렬
+@app.route('/oldest')
+def oldest():
+    posts = Post.query.order_by(Post.post_created_at).all()
+    return render_template('index.html', data=posts)
+
+# 댓글 많은 순으로 정렬
+
+
+@app.route('/most_comments')
+def most_comments():
+    posts = Post.query.all()
+    posts.sort(key=lambda post: post.comment_count, reverse=True)
+    return render_template('index.html', data=posts)
+
+# 댓글 적은 순으로 정렬
+
+
+@app.route('/least_comments')
+def least_comments():
+    posts = Post.query.all()
+    posts.sort(key=lambda post: post.comment_count)
+    return render_template('index.html', data=posts)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
