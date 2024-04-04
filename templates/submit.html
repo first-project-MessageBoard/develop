@@ -155,7 +155,7 @@
         function exist_name(event) {
             event.preventDefault()
             input_name = document.getElementById("username").value;
-            toggle = true
+            toggle = false
             fetch('/register/check/name', {
                 method: 'POST',
                 headers: {
@@ -170,7 +170,7 @@
                         toggle = false
                     } else {
                         document.getElementById("name-check-warning").style.display = "none";
-                        toggle = true
+                        toggle = false
                     }
                 })
                 .catch(error => console.error('Error:', error));
