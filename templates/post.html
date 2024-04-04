@@ -82,7 +82,7 @@
                 <button type="submit" id="post_delete-link">삭제</button>
             </form>
         </div>
-        <p class="post-content">{{ data.post.post_content }}</p>
+        <p class="post-content">{{ data.post.post_content|replace('\n', ' ') }}</p>
     </div>
 
     <div class="comment-container">
@@ -106,15 +106,16 @@
                 <div class="comment-content" id="comment-content-{{ comment.comment_id }}">
                     {{ comment.comment_content|e }}
                 </div>
-        
+
                 <div class="comment-edit" id="comment-edit-{{ comment.comment_id }}" style="display: none;">
-                    <form id="comment-edit-form-{{ comment.comment_id }}" action="/post/{{ data.post.post_id }}/{{ comment.comment_id }}/edit" method="POST">
+                    <form id="comment-edit-form-{{ comment.comment_id }}"
+                        action="/post/{{ data.post.post_id }}/{{ comment.comment_id }}/edit" method="POST">
                         <textarea name="comment-edit" rows="1">{{ comment.comment_content|e }}</textarea>
                         <button onclick="reset({{ comment.comment_id }})">취소</button>
                         <button type="submit">수정</button>
                     </form>
                 </div>
-        
+
                 <div class="comment-actions" id="comment-action-{{ comment.comment_id }}">
                     <button type="button" class="edit-link" onclick="edit({{ comment.comment_id }})">수정</button>
                     <a href="/post/{{ data.post.post_id }}/{{ comment.comment_id }}/delete" class="delete-link">삭제</a>
@@ -122,21 +123,44 @@
             </li>
             {% endfor %}
         </ul>
-        </div>
-        
-        <script>
-            function edit(commentId) {
-                document.getElementById("comment-content-" + commentId).style.display = "none";
-                document.getElementById("comment-edit-" + commentId).style.display = "block";
-                document.getElementById("comment-action-" + commentId).style.display = "none";
-            }
-            function reset(commentId) {
-                document.getElementById("comment-content-" + commentId).style.display = "block";
-                document.getElementById("comment-edit-" + commentId).style.display = "none";
-                document.getElementById("comment-action-" + commentId).style.display = "block";
-            }
-        </script>
-        
+    </div>
+
+    <script>
+        function edit(commentId) {
+            document.getElementById("comment-content-" + commentId).style.display = "none";
+            document.getElementById("comment-edit-" + commentId).style.display = "block";
+            document.getElementById("comment-action-" + commentId).style.display = "none";
+        }
+        function reset(commentId) {
+            document.getElementById("comment-content-" + commentId).style.display = "block";
+            document.getElementById("comment-edit-" + commentId).style.display = "none";
+            document.getElementById("comment-action-" + commentId).style.display = "block";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // 댓글 작성 폼 선택
+            var commentForm = document.getElementById("comment");
+
+            // 댓글 작성 버튼 클릭 시 이벤트 리스너 추가
+            commentForm.addEventListener("submit", function (event) {
+                // 폼이 기본 동작을 중단시키지 않도록 함
+                event.preventDefault();
+
+                // 댓글 내용 입력란 선택
+                var commentContent = commentForm.querySelector("textarea[name='comment']");
+
+                // 댓글 내용이 비어 있는지 확인
+                if (commentContent.value.trim() === "") {
+                    // 댓글 내용이 비어 있으면 경고 메시지 표시
+                    alert("댓글을 입력하세요");
+                } else {
+                    // 댓글 내용이 있으면 폼 제출
+                    commentForm.submit();
+                }
+            });
+        });
+    </script>
+
 
 </body>
 
