@@ -76,9 +76,8 @@ def create_post():
 def write_post():
     return render_template('writing.html')
 
+
 # 게시글
-
-
 @app.route('/post/<int:id>/', methods=['GET', 'POST'])
 def post(id):
     # 댓글 조회
@@ -88,6 +87,7 @@ def post(id):
         return comments
 
     # 댓글 추가
+
     def comment_add(p_id, content, writer):
         new_comment = Comment(
             post_id=p_id, comment_content=content, comment_writer=writer)
@@ -113,9 +113,8 @@ def post(id):
 
     return render_template('post.html', data=context)
 
+
 # 댓글 수정
-
-
 @app.route('/post/<p_id>/<c_id>/edit', methods=['GET', 'POST'])
 def comment_update(p_id, c_id):
     if request.method == "POST":
@@ -189,8 +188,6 @@ def login_post():
     else:
         # 로그인 실패
         return "ID 또는 비밀번호가 잘못되었습니다."
-
-
 
 
 if __name__ == '__main__':
