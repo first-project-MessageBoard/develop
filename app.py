@@ -5,10 +5,6 @@ import os
 app = Flask(__name__)
 
 
-
-
-
-
 # 연결 설정
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
@@ -135,7 +131,9 @@ def comment_update(p_id, c_id):
         return redirect(url_for('post', id=p_id))
 
 # 댓글 삭제
-@app.route('/post/<p_id>/<c_id>/delete', methods=['GET','POST'])
+
+
+@app.route('/post/<p_id>/<c_id>/delete', methods=['GET', 'POST'])
 def comment_delete(p_id, c_id):
     comment_data = Comment.query.filter_by(
         post_id=p_id, comment_id=c_id).first()
@@ -204,15 +202,12 @@ def register():
     return render_template('submit.html')
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
 # 오래된 순으로 정렬
 @app.route('/oldest')
 def oldest():
     posts = Post.query.order_by(Post.post_created_at).all()
     return render_template('index.html', data=posts)
+
 
 # 댓글 많은 순으로 정렬
 
@@ -222,7 +217,6 @@ def most_comments():
     posts = Post.query.all()
     posts.sort(key=lambda post: post.comment_count, reverse=True)
     return render_template('index.html', data=posts)
-
 # 댓글 적은 순으로 정렬
 
 
@@ -231,3 +225,7 @@ def least_comments():
     posts = Post.query.all()
     posts.sort(key=lambda post: post.comment_count)
     return render_template('index.html', data=posts)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
