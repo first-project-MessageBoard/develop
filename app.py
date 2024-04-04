@@ -4,9 +4,6 @@ import os
 
 app = Flask(__name__)
 
-
-
-
 # 연결 설정
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
@@ -15,16 +12,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
 # SQLAlchemy 초기화
 db = SQLAlchemy(app)
 
-
 # 모델 정의
+
+
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post_title = db.Column(db.String(100), nullable=False)
     post_content = db.Column(db.Text, nullable=False)
     post_created_at = db.Column(
         db.DateTime, nullable=False, default=db.func.now())
-    post_author = db.Column(db.String(50), nullable=False,
-                            default='Anonymous')
+    post_author = db.Column(db.String(50), nullable=False, default='익명')
 
     # 댓글 수를 세는 메서드
     @property
@@ -41,12 +38,19 @@ class Comment(db.Model):
         db.DateTime, nullable=False, default=db.func.now())
 
 
+class User(db.Model):
+    user_id = db.Column(db.String(20), primary_key=True, nullable=False)
+    user_pw = db.Column(db.String(50), nullable=False)
+    user_name = db.Column(db.String(20), nullable=False)
+
+
 # 테이블 생성
 with app.app_context():
     db.create_all()
 
-
 # 게시판 글 조회
+
+
 @app.route('/')
 def index():
     posts = Post.query.order_by(Post.post_created_at.desc()).all()
@@ -91,7 +95,6 @@ def post(id):
         db.session.commit()
 
     if request.method == "POST":
-        comment_content = request.form.get('comment_id')
         comment_content = request.form.get('comment')
         comment_writer = "익명"  # 임시 작성자
         comment_add(id, comment_content, comment_writer)
@@ -110,8 +113,9 @@ def post(id):
 
     return render_template('post.html', data=context)
 
-
 # 댓글 수정
+
+
 @app.route('/post/<p_id>/<c_id>/edit', methods=['GET', 'POST'])
 def comment_update(p_id, c_id):
     if request.method == "POST":
@@ -122,7 +126,6 @@ def comment_update(p_id, c_id):
         db.session.add(comment_data)
         db.session.commit()
         return redirect(url_for('post', id=p_id))
-
 
 # 댓글 삭제
 
@@ -135,8 +138,9 @@ def comment_delete(p_id, c_id):
     db.session.commit()
     return redirect(url_for('post', id=p_id))
 
-
 # 글 수정 페이지로 이동
+
+
 @app.route('/edit/<int:id>', methods=['GET'])
 def edit_post(id):
     post = Post.query.get_or_404(id)
@@ -153,14 +157,40 @@ def edit_post_submit(id):
     db.session.commit()
     return redirect(url_for('index'))
 
-
 # 글 삭제
+
+
 @app.route('/delete/<int:id>', methods=['POST'])
 def delete_post(id):
     post = Post.query.get_or_404(id)
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for('index'))
+
+
+# 로그인 페이지 렌더링
+@app.route('/login.html')
+def login():
+    return render_template('login.html')
+
+
+# 로그인 처리
+@app.route('/login', methods=['POST'])
+def login_post():
+    email = request.form['email']
+    password = request.form['password']
+
+    # 이메일과 비밀번호가 일치하는 사용자 조회
+    user = User.query.filter_by(user_id=email, user_pw=password).first()
+
+    if user:
+        # 로그인 성공
+        return "로그인 성공!"
+    else:
+        # 로그인 실패
+        return "ID 또는 비밀번호가 잘못되었습니다."
+
+
 
 
 if __name__ == '__main__':
