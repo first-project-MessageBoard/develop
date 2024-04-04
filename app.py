@@ -87,8 +87,6 @@ def post(id):
         db.session.add(new_comment)
         db.session.commit()
 
-    
-
     if request.method == "POST":
         comment_content = request.form.get('comment_id')
         comment_content = request.form.get('comment')
@@ -110,6 +108,8 @@ def post(id):
     return render_template('post.html', data=context)
 
 # 댓글 수정
+
+
 @app.route('/post/<p_id>/<c_id>/edit', methods=['GET', 'POST'])
 def comment_update(p_id, c_id):
     if request.method == "POST":
