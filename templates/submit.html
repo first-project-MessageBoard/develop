@@ -165,11 +165,11 @@
                     }
                 })
                 .catch(error => console.error('Error:', error));
-                if(toggle) {
-                    return true
-                } else {
-                    return false
-                }
+            if (toggle) {
+                return true
+            } else {
+                return false
+            }
         }
 
         // 중복 아이디 검사
@@ -195,11 +195,11 @@
                     }
                 })
                 .catch(error => console.error('Error:', error));
-                if(toggle) {
-                    return true
-                } else {
-                    return false
-                }
+            if (toggle) {
+                return true
+            } else {
+                return false
+            }
         }
 
         function name_len_check(event) {
@@ -243,7 +243,7 @@
                 document.getElementById("regist_form").submit();
             }
             else {
-                console.log(pw_check(event)+" "+exist_name(event)+" "+exist_id(event)+" "+name_len_check(event)+" "+id_len_check(event)+" "+pw_len_check(event))
+                console.log(pw_check(event) + " " + exist_name(event) + " " + exist_id(event) + " " + name_len_check(event) + " " + id_len_check(event) + " " + pw_len_check(event))
             }
         }
     </script>

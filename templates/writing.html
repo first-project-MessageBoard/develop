@@ -121,15 +121,6 @@
         }
     </script>
 
-    <!-- 댓글 삭제 폼 -->
-    {% if data %}
-    {% for comment in data.comments %}
-    <form action="/post/{{ data.post.post_id }}/delete/{{ comment.comment_id }}" method="POST">
-        <button type="submit">삭제</button>
-    </form>
-    {% endfor %}
-    {% endif %}
-
 </body>
 
 </html>

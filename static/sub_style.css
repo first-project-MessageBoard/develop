@@ -9,7 +9,8 @@ h2 {
 }
 
 td {
-    padding: 8px 0; /* 상자의 위아래 간격을 조절 */
+    padding: 8px 0;
+    /* 상자의 위아래 간격을 조절 */
 }
 
 /* 입력하는 칸 */
@@ -26,7 +27,8 @@ input {
 }
 
 .text-end {
-    text-align: right; /* 회원가입버튼 오른쪽으로 */
+    text-align: right;
+    /* 회원가입버튼 오른쪽으로 */
 }
 
 .btn-primary {
@@ -36,6 +38,11 @@ input {
     border: 0px
 }
 
-#pw-len-check-warning, #pw-check-warning, #id-len-check-warning, #id-check-warning,#name-len-check-warning,#name-check-warning{
-    color: red;}
-
+#pw-len-check-warning,
+#pw-check-warning,
+#id-len-check-warning,
+#id-check-warning,
+#name-len-check-warning,
+#name-check-warning {
+    color: red;
+}

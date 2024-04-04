@@ -116,8 +116,8 @@
                 <div class="modal-body">
                     <!-- 결과 메시지가 여기에 표시됩니다. -->
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <div class="modal-footer" id="modalFooter">
+                    <!-- 취소 버튼 -->
                 </div>
             </div>
         </div>
@@ -131,32 +131,39 @@
             fetch('/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded', // 변경된 부분
                 },
-                body: JSON.stringify({
-                    id: id,
-                    password: password
+                body: new URLSearchParams({
+                    'id': id,
+                    'password': password
                 })
             })
-                .then(response => response.text())
+                .then(response => response.json()) // JSON으로 해석
                 .then(data => {
                     // 모달 창에 로그인 결과 표시
                     var loginModalBody = document.getElementById("loginModal").querySelector(".modal-body");
-                    if (data === "로그인 성공!") {
+                    var modalFooter = document.getElementById("modalFooter");
+                    if (data.result === "success") {
                         loginModalBody.innerHTML = "<p>로그인 성공!</p>";
+                        // 모달 창 띄우기
+                        var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                        loginModal.show();
+                        // 취소 버튼 추가
+                        modalFooter.innerHTML = "<button type='button' class='btn btn-secondary' onclick='window.location.href=`/`'>닫기</button>";
                     } else {
                         loginModalBody.innerHTML = "<p>ID 또는 비밀번호가 잘못되었습니다.</p>";
+                        // 모달 창 띄우기
+                        var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                        loginModal.show();
+                        // 취소 버튼 추가
+                        modalFooter.innerHTML = "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>닫기</button>";
                     }
-                    // 모달 창 띄우기
-                    var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-                    loginModal.show();
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
         }
     </script>
-
 </body>
 
 </html>
