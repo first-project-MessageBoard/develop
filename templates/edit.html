@@ -15,8 +15,8 @@
 <body>
     <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
         <div class="d-flex align-items-start"> <!-- 변경된 부분 -->
-            <img src="https://postfiles.pstatic.net/MjAyNDA0MDJfMjA0/MDAxNzEyMDUzNTg2MzA4.bBTRt6qjNaELTNrH9sOoF14WWyarzjSCQ1fmgWObFVgg.cLeRNAaZEJjN9Dqhx-oN0DJeIlNIQ6cfwhngGlGLQMYg.PNG/%EC%8A%A4%ED%8C%8C%EB%A5%B4%ED%83%80%EC%9E%84_%EB%A1%9C%EA%B3%A0.png?type=w966"
-                alt="" width="300px" height="300px">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" id = ms-3_img alt="로고">
+</div>
             <nav class="navbar navbar-expand-lg ">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -40,6 +40,13 @@
             <div class="menu">
                 <a class="nav-link" href="/writing.html">글쓰기</a>
             </div>
+            <div class="menu">
+                <a class="nav-link" href="/register">회원가입</a>
+            </div>
+            <div class="menu">
+                <a class="nav-link" href="/login">로그인</a>
+            </div>
+
         </div>
     </nav>
 </body>

@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
+
 
 # 연결 설정
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -112,6 +113,7 @@ def post(id):
 
     return render_template('post.html', data=context)
 
+
 # 댓글 수정
 
 
@@ -126,10 +128,11 @@ def comment_update(p_id, c_id):
         db.session.commit()
         return redirect(url_for('post', id=p_id))
 
+
 # 댓글 삭제
 
 
-@app.route('/post/<p_id>/delete/<c_id>', methods=['POST'])
+@app.route('/post/<p_id>/<c_id>/delete', methods=['GET', 'POST'])
 def comment_delete(p_id, c_id):
     comment_data = Comment.query.filter_by(
         post_id=p_id, comment_id=c_id).first()
@@ -166,8 +169,16 @@ def delete_post(id):
 
 
 # 로그인 페이지
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
+    if request.method == "POST":
+        user_name = request.form.get('username')
+        user_id = request.form.get('id')
+        user_pw = request.form.get('password')
+        new_user = User(
+            user_name = user_name, user_id = user_id, user_pw = user_pw)
+        db.session.add(new_user)
+        db.session.commit()
     return render_template('login.html')
 
 # 회원가입 페이지
@@ -175,14 +186,29 @@ def login():
 
 @app.route('/register')
 def register():
-    
-    
-    user_name = request.form.get('username')
-    user_id = request.form.get('id')
-    user_pw = request.form.get('password')
-    user_pw_check = request.form.get('confirm_password')
     user_data = User.query.all()
-    return render_template('submit.html', data = user_data)
+    return render_template('submit.html', data=user_data)
+
+# ID중복체크
+
+
+@app.route('/register/check/id', methods=['POST'])
+def check_id():
+    input_data = request.json['data']
+    data = User.query.filter_by(user_id=input_data).first()
+    print(data)
+    exists = data is not None
+    return jsonify({'exists': exists})
+
+# 닉네임 중복체크
+
+
+@app.route('/register/check/name', methods=['POST'])
+def check_name():
+    input_data = request.json['data']
+    data = User.query.filter_by(user_name=input_data).first()
+    exists = data is not None
+    return jsonify({'exists': exists})
 
 
 if __name__ == '__main__':

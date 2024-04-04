@@ -48,7 +48,7 @@
             </div>
         </div>
     </nav>
-    <form action="/register" method="POST">
+    <form action="/login" id="regist_form" method="POST">
         <table>
             <tr>
                 <td>
@@ -59,20 +59,41 @@
                 <td class="username">사용자이름</td>
             </tr>
             <tr>
-                <td><input type="text" placeholder="닉네임을 입력하세요" id="username" name="username"></td>
+                <td><input type="text" placeholder="이름을 입력하세요" id="username" name="username"></td>
             </tr>
+            <!-- 이부분 수정부탁드립니다 -->
+            <tr>
+                <td class="name-check-warning" id="name-check-warning" style="display: none;">해당 이름은 이미 존재합니다.</td>
+                <td class="name-len-check-warning" id="name-len-check-warning" style="display: none;">이름은 2자~15자 이내여야
+                    합니다.</td>
+            </tr>
+            <!-- 여기까지 -->
             <tr>
                 <td class="id">아이디</td>
             </tr>
             <tr>
                 <td><input type="text" id="id" name="id"></input></td>
             </tr>
+            <!-- 이부분 수정부탁드립니다 -->
+            <tr>
+                <td class="id-check-warning" id="id-check-warning" style="display: none;">해당 아이디는 이미 존재합니다.</td>
+                <td class="id-len-check-warning" id="id-len-check-warning" style="display: none;">아이디는 6자~12자 이내여야 합니다.
+                </td>
+            </tr>
+            <!-- 여기까지 -->
             <tr>
                 <td class="password">비밀번호</td>
             </tr>
             <tr>
                 <td><input type="password" id="password" name="password"></input></td>
             </tr>
+            <!-- 이부분 수정부탁드립니다 -->
+            <tr>
+                <td class="pw-check-warning" id="pw-check-warning" style="display: none;">비밀번호가 일치하지 않습니다</td>
+                <td class="pw-len-check-warning" id="pw-len-check-warning" style="display: none;">비밀번호는 8자~20자 이내여야 합니다.
+                </td>
+            </tr>
+            <!-- 여기까지 -->
             <tr>
                 <td class="confirm_password">비밀번호 확인</td>
             </tr>
@@ -82,43 +103,135 @@
 
             <tr>
                 <td class="text-end">
-                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#successModal">회원가입</button>
+                    <input type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#successModal"
+                        value="회원가입" onclick="submit_form(event)"></input>
                 </td>
             </tr>
         </table>
     </form>
 
-    <!-- <script>
+    <script>
         // 비밀번호 확인 검사
-        function pw_check(pw, pw_confirm) {
-            document.getElementById()
-            return True if pw == pw_confirm else False;
+        function pw_check(event) {
+            event.preventDefault()
+            pw = document.getElementById("password").value;
+            confirm_pw = document.getElementById("confirm_password").value;
+            if (pw == confirm_pw) {
+                document.getElementById("pw-check-warning").style.display = "none";
+                return true
+            }
+            else {
+                document.getElementById("pw-check-warning").style.display = "block";
+                return false
+            }
         }
 
+        // 중복 닉네임 검사
+        function exist_name(event) {
+            event.preventDefault()
+            input_name = document.getElementById("username").value;
+            toggle = true
+            fetch('/register/check/name', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: input_name })
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.exists) {
+                        document.getElementById("name-check-warning").style.display = "block";
+                        toggle = false
+                    } else {
+                        document.getElementById("name-check-warning").style.display = "none";
+                        toggle = true
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+                if(toggle) {
+                    return true
+                } else {
+                    return false
+                }
+        }
 
-        //중복 닉네임 검사
-        function exist_name(user_name):
-            exist_user = User.query.filter_by(user_name = user_name).count()
-        return False if exist_user else True
+        // 중복 아이디 검사
+        function exist_id(event) {
+            event.preventDefault()
+            input_id = document.getElementById("id").value;
+            toggle = true
+            fetch('/register/check/id', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: input_id })
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.exists) {
+                        document.getElementById("id-check-warning").style.display = "block";
+                        toggle = false
+                    } else {
+                        document.getElementById("id-check-warning").style.display = "none";
+                        toggle = true
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+                if(toggle) {
+                    return true
+                } else {
+                    return false
+                }
+        }
 
-        //중복 아이디 검사
-        function exist_id(user_id):
-            exist_user = User.query.filter_by(user_id = user_id).count()
-        return False if exist_user else True
+        function name_len_check(event) {
+            event.preventDefault()
+            input_name = document.getElementById("username").value;
+            if (input_name.length < 2 || input_name.length > 15) {
+                document.getElementById("name-len-check-warning").style.display = "block";
+                return false
+            } else {
+                document.getElementById("name-len-check-warning").style.display = "none";
+                return true
+            }
+        }
 
-        //닉네임 길이 검사
-        function len_name(user_name):
-            return True if 2 <= len(user_name) <= 15 else False
+        function id_len_check(event) {
+            event.preventDefault()
+            input_id = document.getElementById("id").value;
+            if (input_id.length < 6 || input_id.length > 12) {
+                document.getElementById("id-len-check-warning").style.display = "block";
+                return false
+            } else {
+                document.getElementById("id-len-check-warning").style.display = "none";
+                return true
+            }
+        }
 
-        //아이디 길이 검사
-        function len_id(user_id):
-            return True if 6 <= len(user_id) <= 12 else False
+        function pw_len_check(event) {
+            event.preventDefault()
+            input_pw = document.getElementById("password").value;
+            if (input_pw.length < 8 || input_pw.length > 20) {
+                document.getElementById("pw-len-check-warning").style.display = "block";
+                return false
+            } else {
+                document.getElementById("pw-len-check-warning").style.display = "none";
+                return true
+            }
+        }
 
-        //비밀번호 길이 검사
-        function len_pw(user_pw):
-            return True if 8 <= len(user_pw) <= 20 else False
-    </script> -->
+        function submit_form(event) {
+            if (pw_check(event) && exist_name(event) && exist_id(event) && name_len_check(event) && id_len_check(event) && pw_len_check(event)) {
+                document.getElementById("regist_form").submit();
+                console.log('submit')
+            }
+            else {
+                console.log(pw_check(event)+" "+exist_name(event)+" "+exist_id(event)+" "+name_len_check(event)+" "+id_len_check(event)+" "+pw_len_check(event))
+            }
+        }
+    </script>
 
 </body>
 
