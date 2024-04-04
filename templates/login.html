@@ -6,75 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
-        <title>회원가입</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
+    <title>회원가입</title>
 
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Hahmlet&display=swap');
-    
-            /* 글꼴을 적용할 클래스 */
-            * {
-                font-family: "Hahmlet", serif;
-                font-optical-sizing: auto;
-                font-weight: 400;
-                font-style: normal;
-            }
-        </style>
-    
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    
-    
-    </head>
-    
-    <body>
-    
-        <nav class="navbar border-bottom border-body justify-content-space-between" data-bs-theme="white">
-            <div class="ms-3 d-flex align-items-center">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" id=ms-3_img alt="로고">
-            </div>
-            <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" id="spartime_banner" href="#">스파르타임</a>
-                            </li>
-                        </ul>
-                    </div>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hahmlet&display=swap');
+
+        /* 글꼴을 적용할 클래스 */
+        * {
+            font-family: "Hahmlet", serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+    <nav class="navbar border-bottom border-body justify-content-space-between" data-bs-theme="white">
+        <div class="ms-3 d-flex align-items-center">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" id=ms-3_img alt="로고">
+        </div>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" id="spartime_banner" href="#">스파르타임</a>
+                        </li>
+                    </ul>
                 </div>
-            </nav>
-            </div>
-            <div class="ms-auto">
-                <div class="menu">
-                    <a class="nav-link" href="/">게시판</a>
-                </div>
-                <div class="menu">
-                    <a class="nav-link" href="/writing.html">글쓰기</a>
-                </div>
-                <div class="menu">
-                    <a class="nav-link" href="/register">회원가입</a>
-                </div>
-                <div class="menu">
-                    <a class="nav-link" href='/login.html'>로그인</a>
-                </div>
-            </div>
-            
-    
             </div>
         </nav>
-    
-        <div class="navbar-divider"></div>
-        
+        </div>
+        <div class="ms-auto">
+            <div class="menu">
+                <a class="nav-link" href="/">게시판</a>
+            </div>
+            <div class="menu">
+                <a class="nav-link" href="/writing.html">글쓰기</a>
+            </div>
+            <div class="menu">
+                <a class="nav-link" href="/register">회원가입</a>
+            </div>
+            <div class="menu">
+                <a class="nav-link" href='/login.html'>로그인</a>
+            </div>
+        </div>
+
+
+        </div>
+    </nav>
+
+    <div class="navbar-divider"></div>
+
     <table>
         <tr>
             <td>
@@ -101,6 +101,70 @@
             </td>
         </tr>
     </table>
+
+
+    <!-- 모달 창 추가 -->
+    <div class="modal" id="successModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">로그인 성공</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>로그인이 성공적으로 완료되었습니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            var email = document.getElementById("email").value; // 이메일 필드의 ID를 가져와야 함
+            var password = document.getElementById("password").value;
+            // 서버로 ID와 비밀번호 전송
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email, // 키 이름을 "email"로 수정
+                    password: password
+                })
+            })
+                .then(response => response.text())
+                .then(data => {
+                    // 모달 창에 로그인 결과 표시
+                    var loginModalBody = document.getElementById("loginModal").querySelector(".modal-body");
+                    if (data === "로그인 성공!") {
+                        loginModalBody.innerHTML = "<p>로그인 성공!</p>";
+                    } else {
+                        loginModalBody.innerHTML = "<p>ID 또는 비밀번호가 잘못되었습니다.</p>";
+                    }
+                    // 모달 창 띄우기
+                    var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                    loginModal.show();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+
+    <!-- 일단 주석 처리
+    // // 서버에서 리다이렉트를 통해 로그인 성공 메시지를 받는 대신, 클라이언트 측에서 표시
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const successMessage = urlParams.get('success');
+    // if (successMessage) {
+    //     alert(successMessage);
+    // }
+-->
+
 
 </body>
 
