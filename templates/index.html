@@ -113,7 +113,7 @@
 
 
     <table class="table">
-        <thead>
+        <thead class="thead_scope">
             <tr>
                 <th scope="col">제목</th>
                 <th scope="col">댓글</th>
@@ -121,11 +121,11 @@
                 <th scope="col">날짜</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="tbody_post">
             {% for post in data %}
             <tr>
                 <td><a href="/post/{{ post.post_id }}" class="link">{{ post.post_title }}</a></td>
-                <th scope="row">{{ post.comment_count }}</th>
+                <td scope="row">{{ post.comment_count }}</td>
                 <td>{{ post.post_author }}</td>
                 <td>{{ post.post_created_at }}</td>
             </tr>
