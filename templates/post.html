@@ -81,12 +81,14 @@
     <!-- 게시글 관련 -->
     <div class="post">
         <h2 class="post-title">{{ data.post.post_title }}</h2>
+        {% if data.post.post_author == data.login_user_name %}
         <div class="links">
             <a href="/edit/{{ data.post.post_id }}" class="edit-link" id="post_edit-link">수정</a> <!-- 수정 링크 -->
             <form action="{{ url_for('delete_post', id=data.post.post_id) }}" method="post">
                 <button type="submit" id="post_delete-link">삭제</button>
             </form>
         </div>
+        {% endif %}
         <p class="post-content">{{ data.post.post_content|replace('\n', ' ') }}</p>
     </div>
 
@@ -102,6 +104,7 @@
         <ul class="comment-list">
             <!-- 댓글 아이템 -->
             {% for comment in data.comments %}
+
             <li class="comment-item">
                 <div class="comment-header">
                     <span class="comment-author">{{ comment.comment_writer|e }}</span>
@@ -124,11 +127,12 @@
                     </form>
                 </div>
 
-
+                {% if data.login_user_name == comment.comment_writer %}
                 <div class="comment-actions" id="comment-action">
                     <button type="button" class="edit-link" onclick="edit()">수정</button>
                     <a href="/post/{{data.post.post_id}}/{{comment.comment_id}}/delete" class="delete-link">삭제</a>
                 </div>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>
