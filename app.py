@@ -47,12 +47,6 @@ class User(db.Model):
     user_name = db.Column(db.String(20), nullable=False)
 
 
-class User(db.Model):
-    user_id = db.Column(db.String(20), primary_key=True, nullable=False)
-    user_pw = db.Column(db.String(50), nullable=False)
-    user_name = db.Column(db.String(20), nullable=False)
-
-
 # 테이블 생성
 with app.app_context():
     db.create_all()
@@ -178,11 +172,10 @@ def delete_post(id):
     db.session.commit()
     return redirect(url_for('index'))
 
+
 # 로그인 페이지 렌더링
-
-
 @app.route('/login.html')
-def login():
+def render_login():
     return render_template('login.html')
 
 
