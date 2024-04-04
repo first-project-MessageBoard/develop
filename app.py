@@ -6,15 +6,6 @@ app = Flask(__name__)
 
 
 
-#이미지파일업로드
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
 
 # 연결 설정
 basedir = os.path.abspath(os.path.dirname(__file__))
