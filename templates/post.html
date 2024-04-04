@@ -12,6 +12,10 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
 </head>
 
+<link rel="stylesheet" type="text/css" href="static/W_style.css">
+<link rel="stylesheet" type="text/css" href="static/style.css">
+<link rel="stylesheet" type="text/css" href="static/style2.css">
+
 <body>
     <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
         <div class="ms-3 d-flex align-items-center">
@@ -74,7 +78,7 @@
                     <span class="comment-author">{{ comment.comment_writer|e }}</span>
                     <span class="comment-date">{{ comment.comment_created_at|e }}</span>
                 </div>
-                <div class="comment-content">
+                <div class="comment-content" id="comment-content">
                     {{ comment.comment_content|e }}
                 </div>
                 

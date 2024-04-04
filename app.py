@@ -110,6 +110,18 @@ def comment_update(p_id, c_id):
 
     return render_template('post.html', data=context)
 
+# 댓글 수정
+@app.route('/post/<p_id>/<c_id>/edit', methods=['GET', 'POST'])
+def comment_update(p_id, c_id):
+    if request.method == "POST":
+        new_content = request.form.get('comment-edit')
+        comment_data = Comment.query.filter_by(
+            post_id=p_id, comment_id=c_id).first()
+        comment_data.comment_content = new_content
+        db.session.add(comment_data)
+        db.session.commit()
+        return redirect(url_for('post', id=p_id))
+
 # 댓글 삭제
 
 
