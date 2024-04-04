@@ -87,7 +87,7 @@
                 <button type="submit" id="post_delete-link">삭제</button>
             </form>
         </div>
-        <p class="post-content">{{ data.post.post_content }}</p>
+        <p class="post-content">{{ data.post.post_content|replace('\n', ' ') }}</p>
     </div>
 
     <div class="comment-container">
@@ -146,6 +146,25 @@
             document.getElementById("comment-edit").style.display = "none";
             document.getElementById("comment-action").style.display = "block";
         }
+        document.addEventListener("DOMContentLoaded", function () {
+            // 댓글 작성 폼 선택
+            var commentForm = document.getElementById("comment");
+            // 댓글 작성 버튼 클릭 시 이벤트 리스너 추가
+            commentForm.addEventListener("submit", function (event) {
+                // 폼이 기본 동작을 중단시키지 않도록 함
+                event.preventDefault();
+                // 댓글 내용 입력란 선택
+                var commentContent = commentForm.querySelector("textarea[name='comment']");
+                // 댓글 내용이 비어 있는지 확인
+                if (commentContent.value.trim() === "") {
+                    // 댓글 내용이 비어 있으면 경고 메시지 표시
+                    alert("댓글을 입력하세요");
+                } else {
+                    // 댓글 내용이 있으면 폼 제출
+                    commentForm.submit();
+                }
+            });
+        });
     </script>
 </body>
 

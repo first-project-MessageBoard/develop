@@ -178,9 +178,8 @@ def delete_post(id):
 def render_login():
     return render_template('login.html')
 
+
 # 로그인 처리
-
-
 @app.route('/login', methods=['POST'])
 def login_post():
     id = request.form['id']  # 폼에서 ID를 받아옴
@@ -188,13 +187,17 @@ def login_post():
 
     # ID를 기반으로 사용자 조회
     user = User.query.filter_by(user_id=id).first()
-    if user and user.user_pw == password:  # 비밀번호를 평문으로 비교
-        # 사용자가 존재하고 비밀번호가 일치할 경우 로그인 성공
-        # 로그인 성공 후 index 페이지로 리다이렉트하며 성공 메시지 전달
-        return redirect(url_for('index', success="로그인 성공!"))
+    if user:
+        # 사용자가 존재할 경우
+        if user.user_pw == password:
+            # 비밀번호가 일치할 경우 로그인 성공
+            return jsonify({"result": "success", "message": "로그인 성공!"})
+        else:
+            # 비밀번호가 일치하지 않을 경우
+            return jsonify({"result": "error", "message": "ID 또는 비밀번호가 잘못되었습니다."})
     else:
-        # 로그인 실패
-        return render_template('login.html', error="ID 또는 비밀번호가 잘못되었습니다.")
+        # 사용자가 존재하지 않을 경우
+        return jsonify({"result": "error", "message": "ID가 존재하지 않습니다."})
 
 
 # 로그인 페이지

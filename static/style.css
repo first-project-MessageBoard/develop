@@ -150,3 +150,9 @@ tr {
     width: 10%;
     /* 날짜 열 너비 */
 }
+
+
+#searchButton {
+    margin-left: -30px;
+    margin-right: 10px;
+}

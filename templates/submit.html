@@ -152,7 +152,7 @@
         function exist_name(event) {
             event.preventDefault()
             input_name = document.getElementById("username").value;
-            toggle = true
+            toggle = false
             fetch('/register/check/name', {
                 method: 'POST',
                 headers: {
@@ -171,18 +171,18 @@
                     }
                 })
                 .catch(error => console.error('Error:', error));
-                if(toggle) {
-                    return true
-                } else {
-                    return false
-                }
+            if (toggle) {
+                return true
+            } else {
+                return false
+            }
         }
 
         // 중복 아이디 검사
         function exist_id(event) {
             event.preventDefault()
             input_id = document.getElementById("id").value;
-            toggle = true
+            toggle = false
             fetch('/register/check/id', {
                 method: 'POST',
                 headers: {
@@ -201,11 +201,11 @@
                     }
                 })
                 .catch(error => console.error('Error:', error));
-                if(toggle) {
-                    return true
-                } else {
-                    return false
-                }
+            if (toggle) {
+                return true
+            } else {
+                return false
+            }
         }
 
         function name_len_check(event) {
@@ -250,7 +250,7 @@
                 console.log('submit')
             }
             else {
-                console.log(pw_check(event)+" "+exist_name(event)+" "+exist_id(event)+" "+name_len_check(event)+" "+id_len_check(event)+" "+pw_len_check(event))
+                console.log(pw_check(event) + " " + exist_name(event) + " " + exist_id(event) + " " + name_len_check(event) + " " + id_len_check(event) + " " + pw_len_check(event))
             }
         }
     </script>
