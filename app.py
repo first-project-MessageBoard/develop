@@ -178,8 +178,9 @@ def delete_post(id):
 def render_login():
     return render_template('login.html')
 
-
 # 로그인 처리
+
+
 @app.route('/login', methods=['POST'])
 def login_post():
     id = request.form['id']  # 폼에서 ID를 받아옴
@@ -197,8 +198,8 @@ def login_post():
 
 
 # 로그인 페이지
-@app.route('/login', methods=['POST'])
-def login():
+@app.route('/login.html', methods=['POST'])
+def register_user():
     if request.method == "POST":
         user_name = request.form.get('username')
         user_id = request.form.get('id')
@@ -207,7 +208,8 @@ def login():
             user_name=user_name, user_id=user_id, user_pw=user_pw)
         db.session.add(new_user)
         db.session.commit()
-    return render_template('login.html')
+        return redirect(url_for('index'))  # 회원가입 후 메인 게시판으로 리다이렉트
+
 
 # 회원가입 페이지
 
