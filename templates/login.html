@@ -81,42 +81,46 @@
                 <h2> 로그인 </h2>
             </td>
         </tr>
+        <!-- 오류 메시지 출력 -->
+        {% if error %}
         <tr>
-            <td class="email">이메일</td>
+            <td colspan="2" class="text-center text-danger">{{ error }}</td>
         </tr>
-        <tr>
-            <td><input type="email" id="email" name="email"></input></td>
-        </tr>
-        <tr>
-            <td class="password">비밀번호</td>
-        </tr>
-        <tr>
-            <td><input type="password" id="password" name="password"></input></td>
-        </tr>
-
-        <tr>
-            <td class="text-end">
-                <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#successModal">로그인</button>
-            </td>
-        </tr>
+        {% endif %}
+        <form id="loginForm" action="/login" method="POST" onsubmit="login(); return false;">
+            <tr>
+                <td class="id">ID</td>
+            </tr>
+            <tr>
+                <td><input type="text" id="id" name="id"></input></td>
+            </tr>
+            <tr>
+                <td class="password">비밀번호</td>
+            </tr>
+            <tr>
+                <td><input type="password" id="password" name="password"></input></td>
+            </tr>
+            <tr>
+                <td class="text-end">
+                    <button type="submit" class="btn btn-primary">로그인</button>
+                </td>
+            </tr>
+        </form>
     </table>
 
-
     <!-- 모달 창 추가 -->
-    <div class="modal" id="successModal" tabindex="-1">
+    <div class="modal" id="loginModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">로그인 성공</h5>
+                    <h5 class="modal-title">로그인 결과</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>로그인이 성공적으로 완료되었습니다.</p>
+                    <!-- 결과 메시지가 여기에 표시됩니다. -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                    <button type="button" class="btn btn-primary">확인</button>
                 </div>
             </div>
         </div>
@@ -124,7 +128,7 @@
 
     <script>
         function login() {
-            var email = document.getElementById("email").value; // 이메일 필드의 ID를 가져와야 함
+            var id = document.getElementById("id").value;
             var password = document.getElementById("password").value;
             // 서버로 ID와 비밀번호 전송
             fetch('/login', {
@@ -133,7 +137,7 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: email, // 키 이름을 "email"로 수정
+                    id: id,
                     password: password
                 })
             })
@@ -155,15 +159,6 @@
                 });
         }
     </script>
-
-    <!-- 일단 주석 처리
-    // // 서버에서 리다이렉트를 통해 로그인 성공 메시지를 받는 대신, 클라이언트 측에서 표시
-    // const urlParams = new URLSearchParams(window.location.search);
-    // const successMessage = urlParams.get('success');
-    // if (successMessage) {
-    //     alert(successMessage);
-    // }
--->
 
 
 </body>

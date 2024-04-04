@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 app = Flask(__name__)
@@ -78,9 +79,8 @@ def create_post():
 def write_post():
     return render_template('writing.html')
 
+
 # 게시글
-
-
 @app.route('/post/<int:id>/', methods=['GET', 'POST'])
 def post(id):
     # 댓글 조회
@@ -90,6 +90,7 @@ def post(id):
         return comments
 
     # 댓글 추가
+
     def comment_add(p_id, content, writer):
         new_comment = Comment(
             post_id=p_id, comment_content=content, comment_writer=writer)
@@ -97,7 +98,6 @@ def post(id):
         db.session.commit()
 
     if request.method == "POST":
-        comment_content = request.form.get('comment_id')
         comment_content = request.form.get('comment')
         comment_writer = "익명"  # 임시 작성자
         comment_add(id, comment_content, comment_writer)
@@ -111,10 +111,11 @@ def post(id):
     context = {
         "post": post,
         "comments": comments,
-        "comment_count": comment_count  # 댓글 수 추가
+        "comment_count": comment_count
     }
 
     return render_template('post.html', data=context)
+
 
 # 댓글 수정
 
@@ -174,32 +175,70 @@ def delete_post(id):
 
 # 로그인 페이지 렌더링
 @app.route('/login.html')
-def login():
+def render_login():
     return render_template('login.html')
 
-
 # 로그인 처리
+
+
 @app.route('/login', methods=['POST'])
 def login_post():
-    email = request.form['email']
+    id = request.form['id']  # 폼에서 ID를 받아옴
     password = request.form['password']
 
-    # 이메일과 비밀번호가 일치하는 사용자 조회
-    user = User.query.filter_by(user_id=email, user_pw=password).first()
-
-    if user:
-        # 로그인 성공
-        return "로그인 성공!"
+    # ID를 기반으로 사용자 조회
+    user = User.query.filter_by(user_id=id).first()
+    if user and user.user_pw == password:  # 비밀번호를 평문으로 비교
+        # 사용자가 존재하고 비밀번호가 일치할 경우 로그인 성공
+        # 로그인 성공 후 index 페이지로 리다이렉트하며 성공 메시지 전달
+        return redirect(url_for('index', success="로그인 성공!"))
     else:
         # 로그인 실패
-        return "ID 또는 비밀번호가 잘못되었습니다."
+        return render_template('login.html', error="ID 또는 비밀번호가 잘못되었습니다.")
+
+
+# 로그인 페이지
+@app.route('/login.html', methods=['POST'])
+def register_user():
+    if request.method == "POST":
+        user_name = request.form.get('username')
+        user_id = request.form.get('id')
+        user_pw = request.form.get('password')
+        new_user = User(
+            user_name=user_name, user_id=user_id, user_pw=user_pw)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('index'))  # 회원가입 후 메인 게시판으로 리다이렉트
 
 
 # 회원가입 페이지
 
+
 @app.route('/register')
 def register():
-    return render_template('submit.html')
+    user_data = User.query.all()
+    return render_template('submit.html', data=user_data)
+
+# ID중복체크
+
+
+@app.route('/register/check/id', methods=['POST'])
+def check_id():
+    input_data = request.json['data']
+    data = User.query.filter_by(user_id=input_data).first()
+    print(data)
+    exists = data is not None
+    return jsonify({'exists': exists})
+
+# 닉네임 중복체크
+
+
+@app.route('/register/check/name', methods=['POST'])
+def check_name():
+    input_data = request.json['data']
+    data = User.query.filter_by(user_name=input_data).first()
+    exists = data is not None
+    return jsonify({'exists': exists})
 
 
 # 오래된 순으로 정렬
@@ -207,7 +246,6 @@ def register():
 def oldest():
     posts = Post.query.order_by(Post.post_created_at).all()
     return render_template('index.html', data=posts)
-
 
 # 댓글 많은 순으로 정렬
 
@@ -217,6 +255,7 @@ def most_comments():
     posts = Post.query.all()
     posts.sort(key=lambda post: post.comment_count, reverse=True)
     return render_template('index.html', data=posts)
+
 # 댓글 적은 순으로 정렬
 
 

@@ -34,3 +34,7 @@ input {
     color: white;
     border: 0px
 }
+
+#pw-len-check-warning, #pw-check-warning, #id-len-check-warning, #id-check-warning,#name-len-check-warning,#name-check-warning{
+    color: red;
+    }
