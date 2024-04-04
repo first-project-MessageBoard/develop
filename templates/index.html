@@ -81,9 +81,11 @@
     <div class="search_drop">
         <div class="search-container">
             <span>검색</span>
-            <input type="text" name="keyword" placeholder="글을 검색하세요" class="search">
+            <form action="{{ url_for('search') }}" method="GET">
+                <input type="text" name="keyword" placeholder="글을 검색하세요" class="search">
+                <button type="submit" class="btn btn-danger">검색</button>
+            </form>
             <div class="dropdown">
-                <button type="button" class="btn btn-danger" id="searchButton">검색</button>
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     정렬 옵션
@@ -94,17 +96,6 @@
                     <li><a class="dropdown-item" href="/most_comments">댓글 많은 순</a></li>
                     <li><a class="dropdown-item" href="/least_comments">댓글 적은 순</a></li>
                 </ul>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        var dropdownMenu = document.querySelector(".dropdown-menu");
-
-                        dropdownMenu.addEventListener("click", function (e) {
-                            var selectedText = e.target.textContent.trim();
-                            var mainToggleButton = document.querySelector("#dropdownMenuButton");
-                            mainToggleButton.textContent = selectedText;
-                        });
-                    });
-                </script>
             </div>
         </div>
     </div>
@@ -112,6 +103,8 @@
         <h1><a href="#">[게시판]</a></h1>
         <hr>
     </div>
+
+
 
 
     <table class="table">
