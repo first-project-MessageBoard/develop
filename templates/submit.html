@@ -12,17 +12,32 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
         <title>회원가입</title>
-</head>
-
-<link rel="stylesheet" type="text/css" href="style.css">
-<link rel="stylesheet" type="text/css" href="sub_style.css">
-
-<body>
-    <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
-        <div class="ms-3 d-flex align-items-center">
-            <img src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/images/sparta-logo.svg"
-                alt="">
-            <nav class="navbar navbar-expand-lg ">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Hahmlet&display=swap');
+    
+            /* 글꼴을 적용할 클래스 */
+            * {
+                font-family: "Hahmlet", serif;
+                font-optical-sizing: auto;
+                font-weight: 400;
+                font-style: normal;
+            }
+        </style>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    
+    
+    </head>
+    
+    <body>
+    
+        <nav class="navbar border-bottom border-body justify-content-space-between" data-bs-theme="white">
+            <div class="ms-3 d-flex align-items-center">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" id=ms-3_img alt="로고">
+            </div>
+            <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,28 +46,33 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#">스파르타임</a>
+                                <a class="nav-link" aria-current="page" id="spartime_banner" href="#">스파르타임</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-        </div>
-        <div class="ms-auto">
-            <div class="menu">
-                <a class="nav-link" href="/">게시판</a>
             </div>
-            <div class="menu">
-                <a class="nav-link" href="/writing.html">글쓰기</a>
+            <div class="ms-auto">
+                <div class="menu">
+                    <a class="nav-link" href="/">게시판</a>
+                </div>
+                <div class="menu">
+                    <a class="nav-link" href="/writing.html">글쓰기</a>
+                </div>
+                <div class="menu">
+                    <a class="nav-link" href="/register">회원가입</a>
+                </div>
+                <div class="menu">
+                    <a class="nav-link" href='/login.html'>로그인</a>
+                </div>
             </div>
-            <div class="menu">
-                <a class="nav-link" href="/register">회원가입</a>
+            
+    
             </div>
-            <div class="menu">
-                <a class="nav-link" href="/login">로그인</a>
-            </div>
-        </div>
-    </nav>
+        </nav>
+    
+        <div class="navbar-divider"></div>
 
     <table>
         <tr>
