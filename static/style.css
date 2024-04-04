@@ -1,27 +1,26 @@
-.ms-3 img {
-    margin-right: 100px;
-    height: 110px;
+#ms-3_img {
+    
+    height: 100px;
     width: auto;
+    margin-left: -220px
+}
+
+
+#spartime_banner{
+font-size: 35px;
+margin-left: -180px
 }
 
 .navbar .nav-link {
     color: black;
+    
 }
 
 .menu a:hover {
     color: red;
 }
 
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 100px;
-    font-weight: bold;
-    font-size: 25px;
-    color: black;
-    margin-bottom: 50px;
-}
+
 
 .menu {
     display: inline-block;
@@ -39,9 +38,9 @@
 .search-container {
     display: flex;
     align-items: center;
-    margin: 0 50px;
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    margin-left: 120px
 }
 
 .search-container span {
@@ -59,19 +58,31 @@
     font-size: 25px;
     margin: 0 50px; /* 변경된 부분: 여백 조정 */
     font-weight: bold;
+    margin-left: 120px;
+    text-decoration: none;
+    
+    
+}
+
+.wrap.title hr {
+    display: none; /* 변경된 부분: hr 요소 숨기기 */
+    
 }
 
 .table {
-    margin-left: 50px;
+    margin-left: 120px;
     margin-right: 50px;
-    max-width: 100%;
+    max-width: 80%;
     overflow-x: auto;
+    border-collapse: collapse; /* 변경된 부분: 테이블의 경계를 병합 */
+    margin-top: 30px;
 }
 
 tr {
     padding-left: 50px;
     padding-right: 50px;
-}
+    border-bottom: none; /* 변경된 부분: 테이블 행 사이의 경계선 없애기 */
+} 
 
 .link {
     color: black;
@@ -80,4 +91,12 @@ tr {
 
 .link:hover {
     color: red;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+.search {
+    margin-right: 50px; /* 검색 박스와 드롭다운 버튼 사이의 간격 조절 */
 }
