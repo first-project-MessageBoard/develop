@@ -6,13 +6,6 @@ app = Flask(__name__)
 
 
 
-#이미지파일업로드
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 
 
@@ -134,9 +127,7 @@ def comment_update(p_id, c_id):
 
 
 # 댓글 삭제
-
-
-@app.route('/post/<p_id>/delete/<c_id>', methods=['POST'])
+@app.route('/post/<p_id>/<c_id>/delete', methods=['POST'])
 def comment_delete(p_id, c_id):
     comment_data = Comment.query.filter_by(
         post_id=p_id, comment_id=c_id).first()
@@ -170,6 +161,20 @@ def delete_post(id):
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for('index'))
+
+
+# 로그인 페이지
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+# 회원가입 페이지
+
+
+@app.route('/register')
+def register():
+    return render_template('submit.html')
+
 
 
 if __name__ == '__main__':
