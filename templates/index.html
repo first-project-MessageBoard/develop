@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
 
 
     <style>
@@ -24,7 +26,9 @@
         }
     </style>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
 
 </head>
@@ -33,23 +37,23 @@
 
     <nav class="navbar border-bottom border-body justify-content-space-between" data-bs-theme="white">
         <div class="ms-3 d-flex align-items-center">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" id = ms-3_img alt="로고">
-</div>
-            <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" id="spartime_banner" href="#">스파르타임</a>
-                            </li>
-                        </ul>
-                    </div>
+            <img src="{{ url_for('static', filename='images/logo.png') }}" id=ms-3_img alt="로고">
+        </div>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" id="spartime_banner" href="#">스파르타임</a>
+                        </li>
+                    </ul>
                 </div>
-            </nav>
+            </div>
+        </nav>
         </div>
         <div class="ms-auto">
             <div class="menu">
@@ -58,12 +62,15 @@
             <div class="menu">
                 <a class="nav-link" href="/writing.html">글쓰기</a>
             </div>
-            <div class="menu">
-                <a class="nav-link" href="/register">회원가입</a>
-            </div>
-            <div class="menu">
-                <a class="nav-link" href="/login">로그인</a>
-            </div>
+
+        </div>
+        <div class="menu">
+            <a class="nav-link" href="/register">회원가입</a>
+        </div>
+        <div class="menu">
+            <a class="nav-link" href="/login.html">로그인</a>
+        </div>
+
 
         </div>
     </nav>
@@ -76,15 +83,27 @@
             <span>검색</span>
             <input type="text" name="keyword" placeholder="글을 검색하세요" class="search">
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    최신 순
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    정렬 옵션
                 </button>
-                <ul class="dropdown-menu">
-                    <li><button class="dropdown-item" type="button">오래된 순</button></li>
-                    <li><button class="dropdown-item" type="button">댓글 많은 순</button></li>
-                    <li><button class="dropdown-item" type="button">댓글 적은 순</button></li>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="/">최신 순</a></li>
+                    <li><a class="dropdown-item" href="/oldest">오래된 순</a></li>
+                    <li><a class="dropdown-item" href="/most_comments">댓글 많은 순</a></li>
+                    <li><a class="dropdown-item" href="/least_comments">댓글 적은 순</a></li>
                 </ul>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        var dropdownMenu = document.querySelector(".dropdown-menu");
+
+                        dropdownMenu.addEventListener("click", function (e) {
+                            var selectedText = e.target.textContent.trim();
+                            var mainToggleButton = document.querySelector("#dropdownMenuButton");
+                            mainToggleButton.textContent = selectedText;
+                        });
+                    });
+                </script>
             </div>
         </div>
     </div>
@@ -94,11 +113,8 @@
     </div>
 
 
-
-
-
     <table class="table">
-        <thead>
+        <thead class="thead_scope">
             <tr>
                 <th scope="col">제목</th>
                 <th scope="col">댓글</th>
@@ -106,11 +122,11 @@
                 <th scope="col">날짜</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="tbody_post">
             {% for post in data %}
             <tr>
                 <td><a href="/post/{{ post.post_id }}" class="link">{{ post.post_title }}</a></td>
-                <th scope="row">{{ post.comment_count }}</th>
+                <td scope="row">{{ post.comment_count }}</td>
                 <td>{{ post.post_author }}</td>
                 <td>{{ post.post_created_at }}</td>
             </tr>

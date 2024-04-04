@@ -34,3 +34,8 @@ input {
     color: white;
     border: 0px
 }
+
+.btn-primary:hover {
+    background-color: gray;
+    color: white;
+}

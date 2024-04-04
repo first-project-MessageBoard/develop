@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 app = Flask(__name__)
@@ -13,8 +14,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
 # SQLAlchemy 초기화
 db = SQLAlchemy(app)
 
-
 # 모델 정의
+
+
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post_title = db.Column(db.String(100), nullable=False)
@@ -49,8 +51,9 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
-
 # 게시판 글 조회
+
+
 @app.route('/')
 def index():
     posts = Post.query.order_by(Post.post_created_at.desc()).all()
@@ -76,9 +79,8 @@ def create_post():
 def write_post():
     return render_template('writing.html')
 
+
 # 게시글
-
-
 @app.route('/post/<int:id>/', methods=['GET', 'POST'])
 def post(id):
     # 댓글 조회
@@ -88,6 +90,7 @@ def post(id):
         return comments
 
     # 댓글 추가
+
     def comment_add(p_id, content, writer):
         new_comment = Comment(
             post_id=p_id, comment_content=content, comment_writer=writer)
@@ -128,7 +131,6 @@ def comment_update(p_id, c_id):
         db.session.commit()
         return redirect(url_for('post', id=p_id))
 
-
 # 댓글 삭제
 
 
@@ -142,6 +144,8 @@ def comment_delete(p_id, c_id):
 
 
 # 글 수정 페이지로 이동
+
+
 @app.route('/edit/<int:id>', methods=['GET'])
 def edit_post(id):
     post = Post.query.get_or_404(id)
@@ -158,8 +162,9 @@ def edit_post_submit(id):
     db.session.commit()
     return redirect(url_for('index'))
 
-
 # 글 삭제
+
+
 @app.route('/delete/<int:id>', methods=['POST'])
 def delete_post(id):
     post = Post.query.get_or_404(id)
@@ -168,18 +173,43 @@ def delete_post(id):
     return redirect(url_for('index'))
 
 
-# 로그인 페이지
+# 로그인 페이지 렌더링
+@app.route('/login.html')
+def render_login():
+    return render_template('login.html')
+
+# 로그인 처리
+
+
 @app.route('/login', methods=['POST'])
-def login():
+def login_post():
+    id = request.form['id']  # 폼에서 ID를 받아옴
+    password = request.form['password']
+
+    # ID를 기반으로 사용자 조회
+    user = User.query.filter_by(user_id=id).first()
+    if user and user.user_pw == password:  # 비밀번호를 평문으로 비교
+        # 사용자가 존재하고 비밀번호가 일치할 경우 로그인 성공
+        # 로그인 성공 후 index 페이지로 리다이렉트하며 성공 메시지 전달
+        return redirect(url_for('index', success="로그인 성공!"))
+    else:
+        # 로그인 실패
+        return render_template('login.html', error="ID 또는 비밀번호가 잘못되었습니다.")
+
+
+# 로그인 페이지
+@app.route('/login.html', methods=['POST'])
+def register_user():
     if request.method == "POST":
         user_name = request.form.get('username')
         user_id = request.form.get('id')
         user_pw = request.form.get('password')
         new_user = User(
-            user_name = user_name, user_id = user_id, user_pw = user_pw)
+            user_name=user_name, user_id=user_id, user_pw=user_pw)
         db.session.add(new_user)
         db.session.commit()
-    return render_template('login.html')
+        return redirect(url_for('index'))  # 회원가입 후 메인 게시판으로 리다이렉트
+
 
 # 회원가입 페이지
 
@@ -209,6 +239,31 @@ def check_name():
     data = User.query.filter_by(user_name=input_data).first()
     exists = data is not None
     return jsonify({'exists': exists})
+
+
+# 오래된 순으로 정렬
+@app.route('/oldest')
+def oldest():
+    posts = Post.query.order_by(Post.post_created_at).all()
+    return render_template('index.html', data=posts)
+
+# 댓글 많은 순으로 정렬
+
+
+@app.route('/most_comments')
+def most_comments():
+    posts = Post.query.all()
+    posts.sort(key=lambda post: post.comment_count, reverse=True)
+    return render_template('index.html', data=posts)
+
+# 댓글 적은 순으로 정렬
+
+
+@app.route('/least_comments')
+def least_comments():
+    posts = Post.query.all()
+    posts.sort(key=lambda post: post.comment_count)
+    return render_template('index.html', data=posts)
 
 
 if __name__ == '__main__':
