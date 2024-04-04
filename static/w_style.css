@@ -18,6 +18,21 @@
 
 }
 
+#ms-3_img {
+    
+    height: 100px;
+    width: auto;
+    margin-left: -220px
+}
+
+
+
+#spartime_banner{
+    font-size: 35px;
+    margin-left: -180px
+    }
+    
+
 /* Horizontally align "스파르타임" with the logo image */
 .navbar .navbar-expand-lg {
     display: flex;
@@ -49,7 +64,7 @@
     font-weight: bold;
     font-size: 25px;
     color: black;
-    margin-bottom: 50px
+    margin-bottom: 8px
 }
 
 

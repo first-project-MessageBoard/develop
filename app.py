@@ -4,6 +4,18 @@ import os
 
 app = Flask(__name__)
 
+
+
+#이미지파일업로드
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
 # 연결 설정
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
@@ -107,6 +119,7 @@ def post(id):
 
     return render_template('post.html', data=context)
 
+
 # 댓글 수정
 
 
@@ -120,6 +133,7 @@ def comment_update(p_id, c_id):
         db.session.add(comment_data)
         db.session.commit()
         return redirect(url_for('post', id=p_id))
+
 
 # 댓글 삭제
 

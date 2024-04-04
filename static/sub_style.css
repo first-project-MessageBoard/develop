@@ -1,0 +1,36 @@
+table {
+    margin: auto;
+
+}
+
+h2 {
+    margin-bottom: 30px;
+    color: rgb(0, 0, 0);
+}
+
+td {
+    padding: 8px 0; /* 상자의 위아래 간격을 조절 */
+}
+
+/* 입력하는 칸 */
+input {
+    border: 1.5px rgb(240, 39, 39) solid;
+    width: 500px;
+    height: 40px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+.username {
+    height: 30px;
+}
+
+.text-end {
+    text-align: right; /* 회원가입버튼 오른쪽으로 */
+}
+
+.btn-primary {
+    background-color: rgb(240, 39, 39);
+    color: white;
+    border: 0px
+}
