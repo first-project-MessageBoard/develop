@@ -55,7 +55,6 @@
                 </div>
             </div>
         </nav>
-        
         <div class="ms-auto">
             <div class="menu">
                 <a class="nav-link" href="/">게시판</a>
@@ -109,9 +108,9 @@
                 </div>
         
                 <div class="comment-edit" id="comment-edit-{{ comment.comment_id }}" style="display: none;">
-                    <form action="/post/{{ data.post.post_id }}/{{ comment.comment_id }}/edit" method="POST">
+                    <form id="comment-edit-form-{{ comment.comment_id }}" action="/post/{{ data.post.post_id }}/{{ comment.comment_id }}/edit" method="POST">
                         <textarea name="comment-edit" rows="1">{{ comment.comment_content|e }}</textarea>
-                        <button type="button" onclick="reset({{ comment.comment_id }})">취소</button>
+                        <button onclick="reset({{ comment.comment_id }})">취소</button>
                         <button type="submit">수정</button>
                     </form>
                 </div>
@@ -123,21 +122,21 @@
             </li>
             {% endfor %}
         </ul>
+        </div>
         
-    </div>
-
-    <script>
-        function edit(commentId) {
-    document.getElementById("comment-content-" + commentId).style.display = "none";
-    document.getElementById("comment-edit-" + commentId).style.display = "block";
-    document.getElementById("comment-action-" + commentId).style.display = "none";
-}
-function reset(commentId) {
-    document.getElementById("comment-content-" + commentId).style.display = "block";
-    document.getElementById("comment-edit-" + commentId).style.display = "none";
-    document.getElementById("comment-action-" + commentId).style.display = "block";
-}
-    </script>
+        <script>
+            function edit(commentId) {
+                document.getElementById("comment-content-" + commentId).style.display = "none";
+                document.getElementById("comment-edit-" + commentId).style.display = "block";
+                document.getElementById("comment-action-" + commentId).style.display = "none";
+            }
+            function reset(commentId) {
+                document.getElementById("comment-content-" + commentId).style.display = "block";
+                document.getElementById("comment-edit-" + commentId).style.display = "none";
+                document.getElementById("comment-action-" + commentId).style.display = "block";
+            }
+        </script>
+        
 
 </body>
 
