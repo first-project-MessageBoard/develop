@@ -163,3 +163,10 @@
 |          |                 |        |          |댓글 적은 순 정렬 | GET |
 
 
+<br/>
+<br/>
+
+## 웹 사이트 예시
+
+![웹 사이트 스크린샷](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/image/image_721.png)
+
