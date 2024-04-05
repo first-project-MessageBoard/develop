@@ -34,16 +34,45 @@
 
 ## 🚀 주요 기능
 
-- 게시글 조회
-- 글 검색
-- 글 작성
-- 글 수정
-- 글 삭제
-- 댓글 작성
-- 댓글 수정
-- 댓글 삭제
-- 회원가입
-- 로그인
+- **[게시글 조회](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L58)**
+- **[게시글 조회 폼](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/templates/index.html#L1)**
+
+<br/>
+
+- **[게시글 검색](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L67)**
+- **[게시글 작성](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L85)**
+- **[게시글 작성 폼](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/templates/writing.html#L75)**
+
+<br/>
+
+- **[게시글 수정](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.pyy#L169)**
+- **[게시글 수정 폼](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/templates/index.html#L81)**
+
+<br/>
+
+- **[게시글 삭제](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L188)**
+- **[게시글 폼](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/templates/edit.html#L1)**
+
+<br/>
+
+- **[댓글 작성](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L114)**
+- **[댓글 수정](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L143)**
+- **[댓글 삭제](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L157)**
+- **[댓글 폼](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/templates/writing.html#L124)**
+
+<br/>
+
+- **[회원가입](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L230)**
+- **[회원가입 폼](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/templates/submit.html#L1)**
+
+<br/>
+
+- **[로그인](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L201)**
+- **[로그인 폼](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/templates/login.html#L1)**
+
+<br/>
+
+- **[스타일링](https://github.com/first-project-MessageBoard/project_MessageBoard/tree/master/static)**
 
 <br/>
 <br/>
@@ -79,3 +108,37 @@
 
 <br/>
 <br/>
+
+
+## 개발 환경
+
+### 언어
+
+- 🐍 Python
+
+### 프레임워크
+
+- 🌐 Flask
+
+### 데이터베이스
+
+- 🗄️ SQLite
+
+### 웹 기술
+
+- 🖥️ HTML
+- 🎨 CSS
+- 🛠️ JavaScript
+
+### 라이브러리/도구
+
+- 🏷️ SQLAlchemy
+- 🅱️ Bootstrap
+- 🛠️ Werkzeug
+- 📦 Flask-SQLAlchemy
+
+### 기타
+
+- 📚 Git
+- 🔗 GitHub
+
