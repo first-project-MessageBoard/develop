@@ -16,12 +16,14 @@
 ## 팀 멤버 구성 🧑‍💻
 <br/>
 👩‍💻 **프론트엔드**
+
 - 이환희 [@tia4613] (https://github.com/tia4613)
 - 안채연 [@ritsukooo] (https://github.com/ritsukooo)
 
 <br/>
 
 👨‍💻 **백엔드**
+
 - 이진원 [@leejinwon012] (https://github.com/leejinwon012)
 - 이준서 [@LeeJS9856] (https://github.com/LeeJS9856)
 
