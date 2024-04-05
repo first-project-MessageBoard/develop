@@ -115,11 +115,12 @@
                 <div class="comment-edit" id="comment-edit-{{ comment.comment_id }}" style="display: none;">
                     <form id="comment-edit-form-{{ comment.comment_id }}"
                         action="/post/{{data.post.post_id}}/{{comment.comment_id}}/edit" method="POST">
-                        <textarea name="comment-edit-content" id="comment-edit-content"
+                        <textarea name="comment-edit-content" id="comment-edit-content-{{ comment.comment_id }}"
                             rows="1">{{ comment.comment_content|e }}</textarea>
 
-                        <button onclick="resetComment('{{ comment.comment_id }}')">취소</button>
-                        <button type="submit" onclick="emtpyEditComment(event, '{{ comment.comment_id }}')">수정</button>
+                        <button type="button"
+                            onclick="resetComment('{{ comment.comment_id }}', '{{ comment.comment_content }}')">취소</button>
+                        <button type="button" onclick="emtpyEditComment(event, '{{ comment.comment_id }}')">수정</button>
                     </form>
                 </div>
 
@@ -141,14 +142,15 @@
             document.getElementById("comment-edit-" + commentId).style.display = "block";
             document.getElementById("comment-action-" + commentId).style.display = "none";
         }
-        function resetComment(commentId) {
-            document.getElementById("comment-content-" + commentId).style.display = "block";
-            document.getElementById("comment-edit-" + commentId).style.display = "none";
-            document.getElementById("comment-action-" + commentId).style.display = "block";
+        function resetComment(commentId, commentContent) {
+            document.getElementById(`comment-content-${commentId}`).style.display = "block";
+            document.getElementById(`comment-edit-${commentId}`).style.display = "none";
+            document.getElementById(`comment-action-${commentId}`).style.display = "block";
+            document.getElementById(`comment-edit-content-${commentId}`).value = commentContent; // 이전 댓글 내용으로 복원
         }
         function emtpyEditComment(event, commentId) {
             event.preventDefault();
-            inputComment = document.getElementById('comment-edit-content').value;
+            inputComment = document.getElementById('comment-edit-content-' + commentId).value;
             if (inputComment.trim() === "") {
                 alert("댓글을 입력하세요");
             } else {
@@ -158,5 +160,7 @@
 
     </script>
 </body>
+
+</html>
 
 </html>
