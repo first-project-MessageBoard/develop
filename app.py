@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from datetime import datetime
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -22,11 +23,12 @@ class Post(db.Model):
     post_title = db.Column(db.String(100), nullable=False)
     post_content = db.Column(db.Text, nullable=False)
     post_created_at = db.Column(
-        db.DateTime, nullable=False, default=db.func.now())
+        db.DateTime, nullable=False, default=lambda: datetime.now().replace(microsecond=0))
     post_author = db.Column(db.String(50), nullable=False,
-                            default='Anonymous')
+                            default='익명')
 
     # 댓글 수를 세는 메서드
+
     @property
     def comment_count(self):
         return Comment.query.filter_by(post_id=self.post_id).count()
@@ -61,6 +63,15 @@ def index():
     posts = Post.query.order_by(Post.post_created_at.desc()).all()
     return render_template('index.html', data=posts)
 
+
+# 글 검색 기능 추가
+@app.route('/search')
+def search():
+    keyword = request.args.get('keyword', '')  # GET 요청으로부터 검색어 가져오기
+    # 게시글 제목에 검색어가 포함된 게시글을 데이터베이스에서 찾기
+    search_results = Post.query.filter(Post.post_title.contains(keyword)).all()
+    return render_template('index.html', data=search_results)
+
 # 글 작성
 
 
@@ -74,9 +85,8 @@ def create_post():
     db.session.commit()
     return redirect(url_for('index'))
 
+
 # 글 작성 페이지로 이동
-
-
 @app.route('/writing.html')
 def write_post():
     return render_template('writing.html')
