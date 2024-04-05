@@ -185,7 +185,7 @@
         function exist_id(event) {
             event.preventDefault()
             input_id = document.getElementById("id").value;
-            toggle = true
+            toggle = false
             fetch('/register/check/id', {
                 method: 'POST',
                 headers: {
@@ -200,7 +200,7 @@
                         toggle = false
                     } else {
                         document.getElementById("id-check-warning").style.display = "none";
-                        toggle = true
+                        toggle = false
                     }
                 })
                 .catch(error => console.error('Error:', error));
