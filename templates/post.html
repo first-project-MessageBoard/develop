@@ -10,6 +10,25 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
+
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hahmlet&display=swap');
+
+        /* 글꼴을 적용할 클래스 */
+        * {
+            font-family: "Hahmlet", serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+
+
+
 </head>
 
 <link rel="stylesheet" type="text/css" href="static/W_style.css">
@@ -19,24 +38,24 @@
 <body>
     <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
         <div class="ms-3 d-flex align-items-center">
-            <img src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/images/sparta-logo.svg"
-                alt="">
-            <nav class="navbar navbar-expand-lg ">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#">스파르타임</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <img src="{{ url_for('static', filename='images/logo.png') }}" id=ms-3_img alt="로고">
         </div>
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" id="spartime_banner" href="#">스파르타임</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
         <div class="ms-auto">
             <div class="menu">
                 <a class="nav-link" href="/">게시판</a>
@@ -44,26 +63,36 @@
             <div class="menu">
                 <a class="nav-link" href="/writing.html">글쓰기</a>
             </div>
+            <div class="menu">
+                <a class="nav-link" href="/register">회원가입</a>
+            </div>
+            <div class="menu">
+                <a class="nav-link" href="/login.html">로그인</a>
+            </div>
         </div>
     </nav>
+
+    <div class="navbar-divider"></div>
 
     <!-- 게시글 관련 -->
     <div class="post">
         <h2 class="post-title">{{ data.post.post_title }}</h2>
+        {% if data.post.post_author == data.login_user_name %}
         <div class="links">
-            <a href="/edit/{{ data.post.post_id }}" class="edit-link">수정</a> <!-- 수정 링크 -->
+            <a href="/edit/{{ data.post.post_id }}" class="edit-link" id="post_edit-link">수정</a> <!-- 수정 링크 -->
             <form action="{{ url_for('delete_post', id=data.post.post_id) }}" method="post">
-                <button type="submit">삭제</button>
+                <button type="submit" id="post_delete-link">삭제</button>
             </form>
         </div>
-        <p class="post-content">{{ data.post.post_content }}</p>
+        {% endif %}
+        <p class="post-content">{{ data.post.post_content|replace('\n', ' ') }}</p>
     </div>
 
     <div class="comment-container">
         <!-- 댓글 폼 -->
         <div class="comment-form">
-            <form id="comment" action="/post/{{ data.post.post_id }}" method="POST">
-                <textarea name="comment" id="comment" rows="3" placeholder="댓글을 입력하세요"></textarea>
+            <form id="comment-form" action="/post/{{ data.post.post_id }}" method="POST">
+                <textarea name="comment" id="comment" rows="2" placeholder="댓글을 입력하세요"></textarea>
                 <button type="submit">댓글 작성</button>
             </form>
         </div>
@@ -71,46 +100,67 @@
         <ul class="comment-list">
             <!-- 댓글 아이템 -->
             {% for comment in data.comments %}
+
             <li class="comment-item">
                 <div class="comment-header">
                     <span class="comment-author">{{ comment.comment_writer|e }}</span>
                     <span class="comment-date">{{ comment.comment_created_at|e }}</span>
                 </div>
-                <div class="comment-content" id="comment-content">
+                <div class="comment-content" id="comment-content-{{ comment.comment_id }}">
                     {{ comment.comment_content|e }}
                 </div>
 
-                <div class="comment-edit" id="comment-edit">
-                    <form id="comment-edit" action="/post/{{data.post.post_id}}/{{comment.comment_id}}/edit"
-                        method="POST">
-                        <textarea name="comment-edit" id="comment-edit"
-                            rows="3">{{ comment.comment_content|e }}</textarea>
-                        <button onclick="reset()">취소</button>
-                        <button type="submit">수정</button>
+
+
+                <div class="comment-edit" id="comment-edit-{{ comment.comment_id }}" style="display: none;">
+                    <form id="comment-edit-form-{{ comment.comment_id }}"
+                        action="/post/{{data.post.post_id}}/{{comment.comment_id}}/edit" method="POST">
+                        <textarea name="comment-edit-content" id="comment-edit-content-{{ comment.comment_id }}"
+                            rows="1">{{ comment.comment_content|e }}</textarea>
+
+                        <button type="button"
+                            onclick="resetComment('{{ comment.comment_id }}', '{{ comment.comment_content }}')">취소</button>
+                        <button type="button" onclick="emtpyEditComment(event, '{{ comment.comment_id }}')">수정</button>
                     </form>
                 </div>
-                
-                <div class="comment-actions" id="comment-action">
-                    <button type="button" class="edit-link" onclick="edit()">수정</button>
+
+                {% if data.login_user_name == comment.comment_writer %}
+                <div class="comment-actions" id="comment-action-{{ comment.comment_id }}">
+                    <button type="button" class="edit-link"
+                        onclick="editComment('{{ comment.comment_id }}')">수정</button>
                     <a href="/post/{{data.post.post_id}}/{{comment.comment_id}}/delete" class="delete-link">삭제</a>
                 </div>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>
     </div>
 
     <script>
-        function edit() {
-            document.getElementById("comment-content").style.display = "none";
-            document.getElementById("comment-edit").style.display = "block";
-            document.getElementById("comment-action").style.display = "none";
+        function editComment(commentId) {
+            document.getElementById("comment-content-" + commentId).style.display = "none";
+            document.getElementById("comment-edit-" + commentId).style.display = "block";
+            document.getElementById("comment-action-" + commentId).style.display = "none";
         }
-        function reset() {
-            document.getElementById("comment-content").style.display = "block";
-            document.getElementById("comment-edit").style.display = "none";
-            document.getElementById("comment-action").style.display = "block";
+        function resetComment(commentId, commentContent) {
+            document.getElementById(`comment-content-${commentId}`).style.display = "block";
+            document.getElementById(`comment-edit-${commentId}`).style.display = "none";
+            document.getElementById(`comment-action-${commentId}`).style.display = "block";
+            document.getElementById(`comment-edit-content-${commentId}`).value = commentContent; // 이전 댓글 내용으로 복원
         }
+        function emtpyEditComment(event, commentId) {
+            event.preventDefault();
+            inputComment = document.getElementById('comment-edit-content-' + commentId).value;
+            if (inputComment.trim() === "") {
+                alert("댓글을 입력하세요");
+            } else {
+                document.getElementById('comment-edit-form-' + commentId).submit();
+            }
+        }
+
     </script>
 </body>
+
+</html>
 
 </html>
