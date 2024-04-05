@@ -58,7 +58,7 @@
 - **[댓글 작성](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L114)**
 - **[댓글 수정](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L143)**
 - **[댓글 삭제](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/app.py#L157)**
-- **[댓글 폼](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/templates/writing.html#L124)**
+- **[댓글 폼](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/master/templates/post.html#L92)**
 
 <br/>
 
