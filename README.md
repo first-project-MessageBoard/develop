@@ -84,12 +84,12 @@
 
 ## ℹ️ 사용 기술
 
-- **HTML, CSS, JS** : 🌐 웹 페이지를 구성하고 디자인하며, 클라이언트 측 스크립트를 작성하는 데 사용되었습니다.
-- **Flask** : 🐍 파이썬 웹 애플리케이션을 개발하기 위한 마이크로 웹 프레임워크로 사용되었습니다.
-- **SQLite** : 🗄️ 경량 데이터베이스 관리 시스템으로 사용자 및 게시글 정보를 저장하기 위해 사용되었습니다.
-- **SQLAlchemy** : 🏷️ Python 언어를 위한 SQL 툴킷 및 ORM 도구로 사용되었습니다.
-- **Bootstrap** : 🅱️ 반응형 웹 디자인 및 구성 요소를 제공하기 위해 사용되었습니다.
-- **googlefont** : 📝 웹 페이지에 특정 글꼴을 적용하기 위해 Hahmlet 글꼴을 사용했습니다.
+- **HTML, CSS, JS** : 웹 페이지를 구성하고 디자인하며, 클라이언트 측 스크립트를 작성하는 데 사용되었습니다.
+- **Flask** : 파이썬 웹 애플리케이션을 개발하기 위한 마이크로 웹 프레임워크로 사용되었습니다.
+- **SQLite** : 경량 데이터베이스 관리 시스템으로 사용자 및 게시글 정보를 저장하기 위해 사용되었습니다.
+- **SQLAlchemy** : Python 언어를 위한 SQL 툴킷 및 ORM 도구로 사용되었습니다.
+- **Bootstrap** : 반응형 웹 디자인 및 구성 요소를 제공하기 위해 사용되었습니다.
+- **googlefont** : 웹 페이지에 특정 글꼴을 적용하기 위해 Hahmlet 글꼴을 사용했습니다.
 
 <br/>
 <br/>
@@ -117,33 +117,32 @@
 
 ### 언어
 
-- 🐍 Python
+- Python
 
 ### 프레임워크
 
-- 🌐 Flask
+- Flask
 
 ### 데이터베이스
 
-- 🗄️ SQLite
+- SQLite
 
 ### 웹 기술
 
-- 🖥️ HTML
-- 🎨 CSS
-- 🛠️ JavaScript
+- HTML
+- CSS
+- JavaScript
 
 ### 라이브러리/도구
 
-- 🏷️ SQLAlchemy
-- 🅱️ Bootstrap
-- 🛠️ Werkzeug
-- 📦 Flask-SQLAlchemy
+- SQLAlchemy
+- Bootstrap
+- Flask-SQLAlchemy
 
 ### 기타
 
-- 📚 Git
-- 🔗 GitHub
+- Git
+- GitHub
 
 
 <br/>
