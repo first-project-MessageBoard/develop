@@ -168,10 +168,16 @@
 
 ## 🌐 웹 사이트 예시
 
-<div align="center">
-  <img src="https://github.com/first-project-MessageBoard/project_MessageBoard/blob/image/image_721.png" width="300" alt="웹 사이트 스크린샷1">
-  <img src="https://github.com/first-project-MessageBoard/project_MessageBoard/blob/image/image_722.png" width="300" alt="웹 사이트 스크린샷2">
-  <img src="https://github.com/first-project-MessageBoard/project_MessageBoard/blob/image/image_723.png" width="300" alt="웹 사이트 스크린샷3">
-</div>
+![웹 사이트 스크린샷1](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/image/image_721.png)
+
+![웹 사이트 스크린샷2](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/image/image_722.png)
+
+![웹 사이트 스크린샷3](https://github.com/first-project-MessageBoard/project_MessageBoard/blob/image/image_723.png)
+
+
+
+
+
+
 
 
