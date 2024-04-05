@@ -12,8 +12,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
     <title>회원가입</title>
-
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hahmlet&display=swap');
 
@@ -26,19 +24,20 @@
         }
     </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
 
 </head>
 
-<link rel="stylesheet" type="text/css" href="style.css">
-<link rel="stylesheet" type="text/css" href="sub_style.css">
-
 <body>
-    <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
+
+    <nav class="navbar border-bottom border-body justify-content-space-between" data-bs-theme="white">
         <div class="ms-3 d-flex align-items-center">
             <img src="{{ url_for('static', filename='images/logo.png') }}" id=ms-3_img alt="로고">
         </div>
-        <nav class="navbar navbar-expand-lg ">
+        <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,59 +58,188 @@
                 <a class="nav-link" href="/">게시판</a>
             </div>
             <div class="menu">
-                <a class="nav-link" href="writing.html">글쓰기</a>
+                <a class="nav-link" href="/writing.html">글쓰기</a>
             </div>
             <div class="menu">
                 <a class="nav-link" href="/register">회원가입</a>
             </div>
             <div class="menu">
-                <a class="nav-link" href="/login">로그인</a>
+                <a class="nav-link" href="/login.html">로그인</a>
             </div>
+
+
         </div>
     </nav>
+    <form action="/register/success" id="regist_form" method="POST">
+        <table>
+            <tr>
+                <td>
+                    <h2> 회원가입 </h2>
+                </td>
+            </tr>
+            <tr>
+                <td class="username">사용자이름</td>
+            </tr>
+            <tr>
+                <td><input type="text" placeholder="이름을 입력하세요" id="username" name="username"></td>
+            </tr>
+            <tr>
+                <td class="name-check-warning" id="name-check-warning" style="display: none;">해당 이름은 이미 존재합니다.</td>
+                <td class="name-len-check-warning" id="name-len-check-warning" style="display: none;">이름은 2자~15자 이내여야
+                    합니다.</td>
+            </tr>
+            <tr>
+                <td class="id">아이디</td>
+            </tr>
+            <tr>
+                <td><input type="text" id="id" name="id"></input></td>
+            </tr>
+            <tr>
+                <td class="id-check-warning" id="id-check-warning" style="display: none;">해당 아이디는 이미 존재합니다.</td>
+                <td class="id-len-check-warning" id="id-len-check-warning" style="display: none;">아이디는 6자~12자 이내여야 합니다.
+                </td>
+            </tr>
+            <tr>
+                <td class="password">비밀번호</td>
+            </tr>
+            <tr>
+                <td><input type="password" id="password" name="password"></input></td>
+            </tr>
+            <tr>
+                <td class="pw-check-warning" id="pw-check-warning" style="display: none;">비밀번호가 일치하지 않습니다</td>
+                <td class="pw-len-check-warning" id="pw-len-check-warning" style="display: none;">비밀번호는 8자~20자 이내여야 합니다.
+                </td>
+            </tr>
+            <tr>
+                <td class="confirm_password">비밀번호 확인</td>
+            </tr>
+            <tr>
+                <td><input type="password" id="confirm_password" name="confirm_password"></input></td>
+            </tr>
 
-    <div class="navbar-divider"></div>
+            <tr>
+                <td class="text-end">
+                    <input type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#successModal"
+                        value="회원가입" onclick="submit_form(event)"></input>
+                </td>
+            </tr>
+        </table>
+    </form>
 
+    <script>
+        // 비밀번호 확인 검사
+        function pw_check(event) {
+            event.preventDefault()
+            pw = document.getElementById("password").value;
+            confirm_pw = document.getElementById("confirm_password").value;
+            if (pw == confirm_pw) {
+                document.getElementById("pw-check-warning").style.display = "none";
+                return true
+            }
+            else {
+                document.getElementById("pw-check-warning").style.display = "block";
+                return false
+            }
+        }
 
+        // 중복 닉네임 검사
+        async function exist_name(event) {
+            event.preventDefault()
+            input_name = document.getElementById("username").value;
+            const result = await fetch('/register/check/name', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: input_name })
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.exists) {
+                        document.getElementById("name-check-warning").style.display = "block";
+                        return false
+                    } else {
+                        document.getElementById("name-check-warning").style.display = "none";
+                        return true
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            return await result
+        }
 
-    <table>
-        <tr>
-            <td>
-                <h2> 회원가입 </h2>
-            </td>
-        </tr>
-        <tr>
-            <td class="username">사용자이름</td>
-        </tr>
-        <tr>
-            <td><input type="text" placeholder="이름을 입력하세요" id="username" name="username"></td>
-        </tr>
-        <tr>
-            <td class="email">이메일</td>
-        </tr>
-        <tr>
-            <td><input type="email" id="email" name="email"></input></td>
-        </tr>
-        <tr>
-            <td class="password">비밀번호</td>
-        </tr>
-        <tr>
-            <td><input type="password" id="password" name="password"></input></td>
-        </tr>
-        <tr>
-            <td class="confirm_password">비밀번호 확인</td>
-        </tr>
-        <tr>
-            <td><input type="password" id="confirm_password" name="confirm_password"></input></td>
-        </tr>
+        // 중복 아이디 검사
+        async function exist_id(event) {
+            event.preventDefault()
+            input_id = document.getElementById("id").value;
+            const result = await fetch('/register/check/id', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: input_id })
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.exists) {
+                        document.getElementById("id-check-warning").style.display = "block";
+                        return false
+                    } else {
+                        document.getElementById("id-check-warning").style.display = "none";
+                        return true
+                    }
+                })
+                .catch(error => console.error('Error:', error))
+            return await result
+        }
 
-        <tr>
-            <td class="text-end">
-                <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#successModal">회원가입</button>
-            </td>
-        </tr>
-    </table>
+        function name_len_check(event) {
+            event.preventDefault()
+            input_name = document.getElementById("username").value;
+            if (input_name.length < 2 || input_name.length > 15) {
+                document.getElementById("name-len-check-warning").style.display = "block";
+                return false
+            } else {
+                document.getElementById("name-len-check-warning").style.display = "none";
+                return true
+            }
+        }
+
+        function id_len_check(event) {
+            event.preventDefault()
+            input_id = document.getElementById("id").value;
+            if (input_id.length < 6 || input_id.length > 12) {
+                document.getElementById("id-len-check-warning").style.display = "block";
+                return false
+            } else {
+                document.getElementById("id-len-check-warning").style.display = "none";
+                return true
+            }
+        }
+
+        function pw_len_check(event) {
+            event.preventDefault()
+            input_pw = document.getElementById("password").value;
+            if (input_pw.length < 8 || input_pw.length > 20) {
+                document.getElementById("pw-len-check-warning").style.display = "block";
+                return false
+            } else {
+                document.getElementById("pw-len-check-warning").style.display = "none";
+                return true
+            }
+        }
+
+        async function submit_form(event) {
+            f1 = pw_check(event)
+            f2 = await exist_name(event)
+            f3 = await exist_id(event)
+            f4 = name_len_check(event)
+            f5 = id_len_check(event)
+            f6 = pw_len_check(event)
+            if (f1 && f2 && f3 && f4 && f5 && f6) {
+                document.getElementById("regist_form").submit();
+            }
+        }
+    </script>
 
 </body>
 

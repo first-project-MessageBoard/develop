@@ -7,11 +7,11 @@
     <title>게시글</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
 
 
 
@@ -35,27 +35,31 @@
 <link rel="stylesheet" type="text/css" href="static/style.css">
 <link rel="stylesheet" type="text/css" href="static/style2.css">
 
+<link rel="stylesheet" type="text/css" href="static/W_style.css">
+<link rel="stylesheet" type="text/css" href="static/style.css">
+<link rel="stylesheet" type="text/css" href="static/style2.css">
+
 <body>
     <nav class="navbar border-bottom border-body justify-content-space-between " data-bs-theme="white">
         <div class="ms-3 d-flex align-items-center">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" id = ms-3_img alt="로고">
-</div>
-            <nav class="navbar navbar-expand-lg ">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" id="spartime_banner" href="#">스파르타임</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <img src="{{ url_for('static', filename='images/logo.png') }}" id=ms-3_img alt="로고">
         </div>
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" id="spartime_banner" href="#">스파르타임</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
         <div class="ms-auto">
             <div class="menu">
                 <a class="nav-link" href="/">게시판</a>
@@ -63,16 +67,12 @@
             <div class="menu">
                 <a class="nav-link" href="/writing.html">글쓰기</a>
             </div>
-
-
-        </div>
-        <div class="menu">
-            <a class="nav-link" href="/register">회원가입</a>
-        </div>
-        <div class="menu">
-            <a class="nav-link" href="/login">로그인</a>
-        </div>
-        
+            <div class="menu">
+                <a class="nav-link" href="/register">회원가입</a>
+            </div>
+            <div class="menu">
+                <a class="nav-link" href="/login.html">로그인</a>
+            </div>
         </div>
     </nav>
 
@@ -81,21 +81,22 @@
     <!-- 게시글 관련 -->
     <div class="post">
         <h2 class="post-title">{{ data.post.post_title }}</h2>
+        {% if data.post.post_author == data.login_user_name %}
         <div class="links">
             <a href="/edit/{{ data.post.post_id }}" class="edit-link" id="post_edit-link">수정</a> <!-- 수정 링크 -->
             <form action="{{ url_for('delete_post', id=data.post.post_id) }}" method="post">
                 <button type="submit" id="post_delete-link">삭제</button>
             </form>
         </div>
-        <p class="post-content">{{ data.post.post_content }}</p>
+        {% endif %}
+        <p class="post-content">{{ data.post.post_content|replace('\n', ' ') }}</p>
     </div>
 
     <div class="comment-container">
         <!-- 댓글 폼 -->
         <div class="comment-form">
-            <form id="comment" action="/post/{{ data.post.post_id }}" method="POST">
+            <form id="comment-form" action="/post/{{ data.post.post_id }}" method="POST">
                 <textarea name="comment" id="comment" rows="2" placeholder="댓글을 입력하세요"></textarea>
-
                 <button type="submit">댓글 작성</button>
             </form>
         </div>
@@ -103,6 +104,7 @@
         <ul class="comment-list">
             <!-- 댓글 아이템 -->
             {% for comment in data.comments %}
+
             <li class="comment-item">
                 <div class="comment-header">
                     <span class="comment-author">{{ comment.comment_writer|e }}</span>
@@ -112,21 +114,25 @@
                     {{ comment.comment_content|e }}
                 </div>
 
+
+
                 <div class="comment-edit" id="comment-edit">
-                    <form id="comment-edit" action="/post/{{data.post.post_id}}/{{comment.comment_id}}/edit"
+                    <form id="comment-edit-form" action="/post/{{data.post.post_id}}/{{comment.comment_id}}/edit"
                         method="POST">
-                        <textarea name="comment-edit" id="comment-edit"
+                        <textarea name="comment-edit-content" id="comment-edit-content"
                             rows="1">{{ comment.comment_content|e }}</textarea>
 
                         <button onclick="reset()">취소</button>
-                        <button type="submit">수정</button>
+                        <button type="submit" onclick="emtpy_edit_comment(event)">수정</button>
                     </form>
                 </div>
 
+                {% if data.login_user_name == comment.comment_writer %}
                 <div class="comment-actions" id="comment-action">
                     <button type="button" class="edit-link" onclick="edit()">수정</button>
                     <a href="/post/{{data.post.post_id}}/{{comment.comment_id}}/delete" class="delete-link">삭제</a>
                 </div>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>
@@ -143,8 +149,35 @@
             document.getElementById("comment-edit").style.display = "none";
             document.getElementById("comment-action").style.display = "block";
         }
-    </script>
+        function emtpy_comment() {
+            document.addEventListener("DOMContentLoaded", function () {
+                var commentForm = document.getElementById("comment-form");
+                commentForm.addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    var commentContent = commentForm.querySelector("textarea[name='comment']");
+                    if (commentContent.value.trim() === "") {
+                        alert("댓글을 입력하세요");
+                    } else {
+                        commentForm.submit();
+                    }
+                });
+            });
+        }
+        function emtpy_edit_comment(event) {
+            event.preventDefault();
+            input_comment = document.getElementById('comment-edit-content').value;
+            if (input_comment.trim() === "") {
+                alert("댓글을 입력하세요");
+            } else {
+                document.getElementById('comment-edit-form').submit();
+            }
+        }
+        emtpy_comment();
+        emtpy_edit_comment();
 
+    </script>
 </body>
+
+</html>
 
 </html>
