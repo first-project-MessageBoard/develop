@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='log_style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sub_style.css') }}">
 
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hahmlet&display=swap');
 
@@ -29,12 +28,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
-
 </head>
 
 <body>
-
     <nav class="navbar border-bottom border-body justify-content-space-between" data-bs-theme="white">
         <div class="ms-3 d-flex align-items-center">
             <img src="{{ url_for('static', filename='images/logo.png') }}" id=ms-3_img alt="로고">
@@ -66,52 +62,44 @@
                 <a class="nav-link" href="/register">회원가입</a>
             </div>
             <div class="menu">
-                <a class="nav-link" href='/login.html'>로그인</a>
+                <a class="nav-link" href="/login.html">로그인</a>
             </div>
         </div>
-
-
-        </div>
+        
     </nav>
 
     <div class="navbar-divider"></div>
 
-
     <div class="search_drop">
         <div class="search-container">
             <span>검색</span>
-            <input type="text" name="keyword" placeholder="글을 검색하세요" class="search">
+            <form action="{{ url_for('search') }}" method="GET">
+                <input type="text" name="keyword" placeholder="글을 검색하세요" class="search">
+                <button type="submit" class="btn btn-danger" id = "searchbutton">검색</button>
+            </form>
             <div class="dropdown">
-                <button type="button" class="btn btn-danger" id ="searchButton">찾기</button>
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     정렬 옵션
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#">최신 순</a></li>
+                    <li><a class="dropdown-item" href="/">최신 순</a></li>
                     <li><a class="dropdown-item" href="/oldest">오래된 순</a></li>
                     <li><a class="dropdown-item" href="/most_comments">댓글 많은 순</a></li>
                     <li><a class="dropdown-item" href="/least_comments">댓글 적은 순</a></li>
                 </ul>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        var dropdownMenu = document.querySelector(".dropdown-menu");
-
-                        dropdownMenu.addEventListener("click", function (e) {
-                            var selectedText = e.target.textContent.trim();
-                            var mainToggleButton = document.querySelector("#dropdownMenuButton");
-                            mainToggleButton.textContent = selectedText;
-                        });
-                    });
-                </script>
             </div>
         </div>
     </div>
+
+    {% if no_results_message %}
+    <p class="no-results-message">{{ no_results_message }}</p>
+    {% endif %}
+
     <div class="wrap title">
         <h1><a href="#">[게시판]</a></h1>
         <hr>
     </div>
-
 
     <table class="table">
         <thead class="thead_scope">

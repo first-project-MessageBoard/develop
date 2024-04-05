@@ -1,19 +1,19 @@
 #ms-3_img {
-    
+
     height: 100px;
     width: auto;
     margin-left: -220px
 }
 
 
-#spartime_banner{
-font-size: 35px;
-margin-left: -180px
+#spartime_banner {
+    font-size: 35px;
+    margin-left: -180px
 }
 
 .navbar .nav-link {
     color: black;
-    
+
 }
 
 .menu a:hover {
@@ -50,23 +50,26 @@ margin-left: -180px
 }
 
 .wrap.title hr {
-    display: block; /* 변경된 부분: hr 요소 표시 */
+    display: block;
+    /* 변경된 부분: hr 요소 표시 */
 }
 
 .wrap.title h1 a {
     color: red;
     font-size: 25px;
-    margin: 0 50px; /* 변경된 부분: 여백 조정 */
+    margin: 0 50px;
+    /* 변경된 부분: 여백 조정 */
     font-weight: bold;
     margin-left: 120px;
     text-decoration: none;
-    
-    
+
+
 }
 
 .wrap.title hr {
-    display: none; /* 변경된 부분: hr 요소 숨기기 */
-    
+    display: none;
+    /* 변경된 부분: hr 요소 숨기기 */
+
 }
 
 .table {
@@ -74,15 +77,17 @@ margin-left: -180px
     margin-right: 50px;
     max-width: 80%;
     overflow-x: auto;
-    border-collapse: collapse; /* 변경된 부분: 테이블의 경계를 병합 */
+    border-collapse: collapse;
+    /* 변경된 부분: 테이블의 경계를 병합 */
     margin-top: 30px;
 }
 
 tr {
     padding-left: 50px;
     padding-right: 50px;
-    border-bottom: none; /* 변경된 부분: 테이블 행 사이의 경계선 없애기 */
-} 
+    border-bottom: none;
+    /* 변경된 부분: 테이블 행 사이의 경계선 없애기 */
+}
 
 .link {
     color: black;
@@ -97,14 +102,18 @@ tr {
     display: flex;
     align-items: center;
 }
+
 .search {
-    margin-right: 50px; /* 검색 박스와 드롭다운 버튼 사이의 간격 조절 */
+    margin-right: 50px;
+    /* 검색 박스와 드롭다운 버튼 사이의 간격 조절 */
 }
 
 .dropdown-menu.show .dropdown-item:focus,
 .dropdown-menu.show .dropdown-item:hover {
-    background-color: red; /* 드롭다운 메뉴가 열렸을 때 버튼이 클릭되었거나 마우스를 올렸을 때 배경 색상 */
-    color: white; /* 드롭다운 메뉴가 열렸을 때 버튼이 클릭되었거나 마우스를 올렸을 때 텍스트 색상 */
+    background-color: red;
+    /* 드롭다운 메뉴가 열렸을 때 버튼이 클릭되었거나 마우스를 올렸을 때 배경 색상 */
+    color: white;
+    /* 드롭다운 메뉴가 열렸을 때 버튼이 클릭되었거나 마우스를 올렸을 때 텍스트 색상 */
 }
 
 
@@ -116,27 +125,41 @@ tr {
 }
 
 .thead_scope th {
-    padding-left: 10px; /* 좌측 여백 */
-    padding-right: 10px; /* 우측 여백 */
+    padding-left: 10px;
+    /* 좌측 여백 */
+    padding-right: 10px;
+    /* 우측 여백 */
 }
 
 .thead_scope th:nth-child(1) {
-    width: 40%; /* 제목 열 너비 */
+    width: 30%;
+    /* 제목 열 너비 */
 }
 
 .thead_scope th:nth-child(2) {
-    width: 7%; /* 댓글 열 너비 */
+    width: 7%;
+    /* 댓글 열 너비 */
 }
 
 .thead_scope th:nth-child(3) {
-    width: 10%; /* 작성자 열 너비 */
+    width: 10%;
+    /* 작성자 열 너비 */
 }
 
 .thead_scope th:nth-child(4) {
-    width: 10%; /* 날짜 열 너비 */
+    width: 10%;
+    /* 날짜 열 너비 */
 }
 
-#searchButton {
-    margin-left: -30px;
+
+#searchbutton {
+    margin-left: -35px;
     margin-right: 10px;
-    }
+}
+
+
+.no-results-message {
+    margin-left: 200px;
+    margin-top: -20px;
+    color: red;
+}
