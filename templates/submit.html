@@ -143,11 +143,10 @@
         }
 
         // 중복 닉네임 검사
-        function exist_name(event) {
+        async function exist_name(event) {
             event.preventDefault()
             input_name = document.getElementById("username").value;
-            toggle = false
-            fetch('/register/check/name', {
+            const result = await fetch('/register/check/name', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -158,26 +157,21 @@
                 .then(result => {
                     if (result.exists) {
                         document.getElementById("name-check-warning").style.display = "block";
-                        toggle = false
+                        return false
                     } else {
                         document.getElementById("name-check-warning").style.display = "none";
-                        toggle = true
+                        return true
                     }
                 })
                 .catch(error => console.error('Error:', error));
-            if (toggle) {
-                return true
-            } else {
-                return false
-            }
+            return await result
         }
 
         // 중복 아이디 검사
-        function exist_id(event) {
+        async function exist_id(event) {
             event.preventDefault()
             input_id = document.getElementById("id").value;
-            toggle = false
-            fetch('/register/check/id', {
+            const result = await fetch('/register/check/id', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -188,18 +182,14 @@
                 .then(result => {
                     if (result.exists) {
                         document.getElementById("id-check-warning").style.display = "block";
-                        toggle = false
+                        return false
                     } else {
                         document.getElementById("id-check-warning").style.display = "none";
-                        toggle = true
+                        return true
                     }
                 })
-                .catch(error => console.error('Error:', error));
-            if (toggle) {
-                return true
-            } else {
-                return false
-            }
+                .catch(error => console.error('Error:', error))
+            return await result
         }
 
         function name_len_check(event) {
@@ -238,12 +228,15 @@
             }
         }
 
-        function submit_form(event) {
-            if (pw_check(event) && exist_name(event) && exist_id(event) && name_len_check(event) && id_len_check(event) && pw_len_check(event)) {
+        async function submit_form(event) {
+            f1 = pw_check(event)
+            f2 = await exist_name(event)
+            f3 = await exist_id(event)
+            f4 = name_len_check(event)
+            f5 = id_len_check(event)
+            f6 = pw_len_check(event)
+            if (f1 && f2 && f3 && f4 && f5 && f6) {
                 document.getElementById("regist_form").submit();
-            }
-            else {
-                console.log(pw_check(event) + " " + exist_name(event) + " " + exist_id(event) + " " + name_len_check(event) + " " + id_len_check(event) + " " + pw_len_check(event))
             }
         }
     </script>
