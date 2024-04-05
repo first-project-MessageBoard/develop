@@ -40,7 +40,7 @@ class Comment(db.Model):
     comment_content = db.Column(db.Text, nullable=False)
     comment_writer = db.Column(db.String(50), nullable=False)
     comment_created_at = db.Column(
-        db.DateTime, nullable=False, default=db.func.now())
+        db.DateTime, nullable=False, default=lambda: datetime.now().replace(microsecond=0))
 
 
 class User(db.Model):
