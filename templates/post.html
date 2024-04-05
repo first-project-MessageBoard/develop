@@ -106,26 +106,27 @@
                     <span class="comment-author">{{ comment.comment_writer|e }}</span>
                     <span class="comment-date">{{ comment.comment_created_at|e }}</span>
                 </div>
-                <div class="comment-content" id="comment-content">
+                <div class="comment-content" id="comment-content-{{ comment.comment_id }}">
                     {{ comment.comment_content|e }}
                 </div>
 
 
 
-                <div class="comment-edit" id="comment-edit">
-                    <form id="comment-edit-form" action="/post/{{data.post.post_id}}/{{comment.comment_id}}/edit"
-                        method="POST">
+                <div class="comment-edit" id="comment-edit-{{ comment.comment_id }}" style="display: none;">
+                    <form id="comment-edit-form-{{ comment.comment_id }}"
+                        action="/post/{{data.post.post_id}}/{{comment.comment_id}}/edit" method="POST">
                         <textarea name="comment-edit-content" id="comment-edit-content"
                             rows="1">{{ comment.comment_content|e }}</textarea>
 
-                        <button onclick="reset()">취소</button>
-                        <button type="submit" onclick="emtpy_edit_comment(event)">수정</button>
+                        <button onclick="resetComment('{{ comment.comment_id }}')">취소</button>
+                        <button type="submit" onclick="emtpyEditComment(event, '{{ comment.comment_id }}')">수정</button>
                     </form>
                 </div>
 
                 {% if data.login_user_name == comment.comment_writer %}
-                <div class="comment-actions" id="comment-action">
-                    <button type="button" class="edit-link" onclick="edit()">수정</button>
+                <div class="comment-actions" id="comment-action-{{ comment.comment_id }}">
+                    <button type="button" class="edit-link"
+                        onclick="editComment('{{ comment.comment_id }}')">수정</button>
                     <a href="/post/{{data.post.post_id}}/{{comment.comment_id}}/delete" class="delete-link">삭제</a>
                 </div>
                 {% endif %}
@@ -135,45 +136,27 @@
     </div>
 
     <script>
-        function edit() {
-            document.getElementById("comment-content").style.display = "none";
-            document.getElementById("comment-edit").style.display = "block";
-            document.getElementById("comment-action").style.display = "none";
+        function editComment(commentId) {
+            document.getElementById("comment-content-" + commentId).style.display = "none";
+            document.getElementById("comment-edit-" + commentId).style.display = "block";
+            document.getElementById("comment-action-" + commentId).style.display = "none";
         }
-        function reset() {
-            document.getElementById("comment-content").style.display = "block";
-            document.getElementById("comment-edit").style.display = "none";
-            document.getElementById("comment-action").style.display = "block";
+        function resetComment(commentId) {
+            document.getElementById("comment-content-" + commentId).style.display = "block";
+            document.getElementById("comment-edit-" + commentId).style.display = "none";
+            document.getElementById("comment-action-" + commentId).style.display = "block";
         }
-        function emtpy_comment() {
-            document.addEventListener("DOMContentLoaded", function () {
-                var commentForm = document.getElementById("comment-form");
-                commentForm.addEventListener("submit", function (event) {
-                    event.preventDefault();
-                    var commentContent = commentForm.querySelector("textarea[name='comment']");
-                    if (commentContent.value.trim() === "") {
-                        alert("댓글을 입력하세요");
-                    } else {
-                        commentForm.submit();
-                    }
-                });
-            });
-        }
-        function emtpy_edit_comment(event) {
+        function emtpyEditComment(event, commentId) {
             event.preventDefault();
-            input_comment = document.getElementById('comment-edit-content').value;
-            if (input_comment.trim() === "") {
+            inputComment = document.getElementById('comment-edit-content').value;
+            if (inputComment.trim() === "") {
                 alert("댓글을 입력하세요");
             } else {
-                document.getElementById('comment-edit-form').submit();
+                document.getElementById('comment-edit-form-' + commentId).submit();
             }
         }
-        emtpy_comment();
-        emtpy_edit_comment();
 
     </script>
 </body>
-
-</html>
 
 </html>
