@@ -156,3 +156,10 @@ tr {
     margin-left: -30px;
     margin-right: 10px;
 }
+
+
+.no-results-message {
+    margin-left: 200px;
+    margin-top: -20px;
+    color: red;
+}

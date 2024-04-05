@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -69,8 +69,18 @@ def index():
 def search():
     keyword = request.args.get('keyword', '')  # GET 요청으로부터 검색어 가져오기
     # 게시글 제목에 검색어가 포함된 게시글을 데이터베이스에서 찾기
-    search_results = Post.query.filter(Post.post_title.contains(keyword)).all()
-    return render_template('index.html', data=search_results)
+    if keyword:  # 검색어가 있는 경우에는 검색 수행
+        search_results = Post.query.filter(
+            Post.post_title.contains(keyword)).all()
+    else:  # 검색어가 없는 경우에는 최신순으로 정렬된 모든 게시글 가져오기
+        search_results = Post.query.order_by(Post.post_created_at.desc()).all()
+
+    no_results_message = None  # 검색 결과가 없을 때 표시할 메시지 초기화
+    if not search_results and keyword:  # 검색 결과가 없는 경우 메시지 설정 (단, 검색어가 있을 때에만)
+        no_results_message = f"'{keyword}'에 대한 검색 결과가 없습니다."
+
+    return render_template('index.html', data=search_results, no_results_message=no_results_message, search_keyword=keyword)
+
 
 # 글 작성
 
